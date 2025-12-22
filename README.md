@@ -1,4 +1,4 @@
-# 🌏 Hệ Thống Quản Lý Tour Du Lịch
+# 🌏 Travel Management System
 
 <div align="center">
 
@@ -7,126 +7,126 @@
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-Hệ thống quản lý đặt tour du lịch toàn diện được xây dựng trên Laravel Framework
+A comprehensive travel tour booking management system built on Laravel Framework
 
-[Tính Năng](#-tính-năng) •
-[Cài Đặt](#-cài-đặt) •
-[Sử Dụng](#-sử-dụng) •
-[Đóng Góp](#-đóng-góp)
+[Features](#-features) •
+[Installation](#-installation) •
+[Usage](#-usage) •
+[Contributing](#-contributing)
 
 </div>
 
 ---
 
-## 📋 Mục Lục
+## 📋 Table of Contents
 
-- [Giới Thiệu](#-giới-thiệu)
-- [Tính Năng](#-tính-năng)
-- [Công Nghệ](#-công-nghệ-sử-dụng)
-- [Yêu Cầu Hệ Thống](#-yêu-cầu-hệ-thống)
-- [Cài Đặt](#-cài-đặt)
-- [Cấu Trúc Dự Án](#-cấu-trúc-dự-án)
-- [Sử Dụng](#-sử-dụng)
+- [Introduction](#-introduction)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [System Requirements](#-system-requirements)
+- [Installation](#-installation)
+- [Project Structure](#-project-structure)
+- [Usage](#-usage)
 - [API Documentation](#-api-documentation)
 - [Screenshots](#-screenshots)
-- [Đóng Góp](#-đóng-góp)
+- [Contributing](#-contributing)
 - [License](#-license)
-- [Liên Hệ](#-liên-hệ)
+- [Contact](#-contact)
 
 ---
 
-## 🎯 Giới Thiệu
+## 🎯 Introduction
 
-**Travel Management System** là một ứng dụng web quản lý tour du lịch hiện đại, được phát triển bằng Laravel Framework. Hệ thống cung cấp đầy đủ các tính năng cho cả khách hàng và quản trị viên, từ việc tìm kiếm và đặt tour đến quản lý đơn hàng và thống kê doanh thu.
+**Travel Management System** is a modern web application for managing travel tours, developed using Laravel Framework. The system provides complete features for both customers and administrators, from searching and booking tours to managing orders and revenue statistics.
 
-### 🎨 Đặc Điểm Nổi Bật
+### 🎨 Key Highlights
 
-- ✅ Giao diện thân thiện, responsive trên mọi thiết bị
-- ✅ Hệ thống phân quyền rõ ràng và bảo mật
-- ✅ Tích hợp thanh toán trực tuyến
-- ✅ Dashboard thống kê trực quan
-- ✅ Tìm kiếm và lọc tour thông minh
+- ✅ User-friendly, responsive interface on all devices
+- ✅ Clear and secure role-based access control
+- ✅ Online payment integration
+- ✅ Intuitive dashboard statistics
+- ✅ Smart tour search and filtering
 
 ---
 
-## 🚀 Tính Năng
+## 🚀 Features
 
-### 👨‍💼 Phân Hệ Quản Trị (Admin)
+### 👨‍💼 Admin Panel
 
 <table>
 <tr>
 <td width="50%">
 
 #### 📊 Dashboard
-- Thống kê tổng quan số lượng tour
-- Báo cáo doanh thu theo thời gian
-- Biểu đồ số lượng đơn hàng
-- Danh sách đơn hàng gần đây
+- Overview statistics of tours
+- Revenue reports by time period
+- Order quantity charts
+- Recent orders list
 
 </td>
 <td width="50%">
 
-#### 🗺️ Quản Lý Tour
-- Thêm/Sửa/Xóa tour du lịch
-- Upload hình ảnh tour
-- Quản lý giá và khuyến mãi
-- Cập nhật lịch trình chi tiết
+#### 🗺️ Tour Management
+- Add/Edit/Delete tours
+- Upload tour images
+- Manage pricing and promotions
+- Update detailed itineraries
 
 </td>
 </tr>
 <tr>
 <td width="50%">
 
-#### 📦 Quản Lý Đơn Hàng
-- Theo dõi trạng thái booking
-- Xác nhận/Hủy đơn hàng
-- Cập nhật trạng thái thanh toán
-- Xuất báo cáo đơn hàng
+#### 📦 Order Management
+- Track booking status
+- Confirm/Cancel orders
+- Update payment status
+- Export order reports
 
 </td>
 <td width="50%">
 
-#### 🔐 Phân Quyền
-- Middleware bảo mật
-- Quản lý vai trò người dùng
-- Kiểm soát truy cập admin
-- Log hoạt động hệ thống
+#### 🔐 Access Control
+- Security middleware
+- User role management
+- Admin access control
+- System activity logs
 
 </td>
 </tr>
 </table>
 
-### 👥 Phân Hệ Khách Hàng
+### 👥 Customer Portal
 
 <table>
 <tr>
 <td width="50%">
 
-#### 🔍 Tìm Kiếm & Xem Tour
-- Danh sách tour phong phú
-- Tìm kiếm theo điểm đến
-- Lọc theo giá, thời gian
-- Xem chi tiết tour và đánh giá
+#### 🔍 Search & Browse Tours
+- Rich tour listings
+- Search by destination
+- Filter by price and time
+- View tour details and reviews
 
 </td>
 <td width="50%">
 
-#### 🎫 Đặt Tour
-- Quy trình đặt tour đơn giản
-- Thanh toán trực tuyến an toàn
-- Xác nhận booking qua email
-- Theo dõi trạng thái đơn hàng
+#### 🎫 Book Tours
+- Simple booking process
+- Secure online payment
+- Email booking confirmation
+- Track order status
 
 </td>
 </tr>
 <tr>
 <td colspan="2">
 
-#### 👤 Tài Khoản Cá Nhân
-- Đăng ký/Đăng nhập dễ dàng
-- Quản lý thông tin cá nhân
-- Lịch sử đặt tour
-- Đổi mật khẩu và cài đặt
+#### 👤 Personal Account
+- Easy registration/login
+- Manage personal information
+- Booking history
+- Password change and settings
 
 </td>
 </tr>
@@ -134,7 +134,7 @@ Hệ thống quản lý đặt tour du lịch toàn diện được xây dựng 
 
 ---
 
-## 🛠 Công Nghệ Sử Dụng
+## 🛠 Tech Stack
 
 ### Backend
 ```
@@ -163,9 +163,9 @@ Hệ thống quản lý đặt tour du lịch toàn diện được xây dựng 
 
 ---
 
-## 💻 Yêu Cầu Hệ Thống
+## 💻 System Requirements
 
-Đảm bảo máy tính của bạn đáp ứng các yêu cầu sau:
+Ensure your machine meets the following requirements:
 
 | Requirement | Version |
 |------------|---------|
@@ -175,7 +175,7 @@ Hệ thống quản lý đặt tour du lịch toàn diện được xây dựng 
 | Node.js | ≥ 18.x |
 | NPM | ≥ 9.x |
 
-### Extensions PHP Cần Thiết
+### Required PHP Extensions
 ```
 ✓ BCMath
 ✓ Ctype
@@ -190,38 +190,38 @@ Hệ thống quản lý đặt tour du lịch toàn diện được xây dựng 
 
 ---
 
-## 📦 Cài Đặt
+## 📦 Installation
 
-### Bước 1: Clone Repository
+### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/username/travel-management-system.git
+git clone https://github.com/LeTranKimHung/travel-management-system.git
 cd travel-management-system
 ```
 
-### Bước 2: Cài Đặt Dependencies
+### Step 2: Install Dependencies
 
 ```bash
-# Cài đặt PHP dependencies
+# Install PHP dependencies
 composer install
 
-# Cài đặt Node dependencies
+# Install Node dependencies
 npm install
 ```
 
-### Bước 3: Cấu Hình Environment
+### Step 3: Environment Configuration
 
 ```bash
-# Copy file environment
+# Copy environment file
 cp .env.example .env
 
 # Generate application key
 php artisan key:generate
 ```
 
-### Bước 4: Cấu Hình Database
+### Step 4: Database Configuration
 
-Mở file `.env` và cập nhật thông tin database:
+Open `.env` file and update database information:
 
 ```env
 DB_CONNECTION=mysql
@@ -232,17 +232,17 @@ DB_USERNAME=root
 DB_PASSWORD=your_password
 ```
 
-### Bước 5: Chạy Migration & Seeder
+### Step 5: Run Migration & Seeder
 
 ```bash
-# Tạo database schema
+# Create database schema
 php artisan migrate
 
-# Seed dữ liệu mẫu (optional)
+# Seed sample data (optional)
 php artisan db:seed
 ```
 
-### Bước 6: Build Assets
+### Step 6: Build Assets
 
 ```bash
 # Development
@@ -252,15 +252,15 @@ npm run dev
 npm run build
 ```
 
-### Bước 7: Khởi Động Server
+### Step 7: Start Server
 
 ```bash
 php artisan serve
 ```
 
-🎉 Truy cập ứng dụng tại: **http://127.0.0.1:8000**
+🎉 Access the application at: **http://127.0.0.1:8000**
 
-### 🔑 Tài Khoản Mặc Định
+### 🔑 Default Accounts
 
 **Admin:**
 - Email: `admin@travel.com`
@@ -272,7 +272,7 @@ php artisan serve
 
 ---
 
-## 📂 Cấu Trúc Dự Án
+## 📂 Project Structure
 
 ```
 travel-management-system/
@@ -325,9 +325,9 @@ travel-management-system/
 
 ---
 
-## 📖 Sử Dụng
+## 📖 Usage
 
-### Khởi Động Development Server
+### Start Development Server
 
 ```bash
 # Start Laravel server
@@ -337,7 +337,7 @@ php artisan serve
 npm run dev
 ```
 
-### Chạy Tests
+### Run Tests
 
 ```bash
 # Run all tests
@@ -376,68 +376,68 @@ php artisan migrate:rollback
 ### Authentication Endpoints
 
 ```http
-POST   /api/register          # Đăng ký tài khoản
-POST   /api/login             # Đăng nhập
-POST   /api/logout            # Đăng xuất
+POST   /api/register          # Register account
+POST   /api/login             # Login
+POST   /api/logout            # Logout
 ```
 
 ### Tour Endpoints
 
 ```http
-GET    /api/tours             # Lấy danh sách tour
-GET    /api/tours/{id}        # Lấy chi tiết tour
-POST   /api/tours             # Tạo tour mới (Admin)
-PUT    /api/tours/{id}        # Cập nhật tour (Admin)
-DELETE /api/tours/{id}        # Xóa tour (Admin)
+GET    /api/tours             # Get tour list
+GET    /api/tours/{id}        # Get tour details
+POST   /api/tours             # Create new tour (Admin)
+PUT    /api/tours/{id}        # Update tour (Admin)
+DELETE /api/tours/{id}        # Delete tour (Admin)
 ```
 
 ### Booking Endpoints
 
 ```http
-POST   /api/bookings          # Đặt tour
-GET    /api/bookings          # Lấy danh sách booking
-GET    /api/bookings/{id}     # Chi tiết booking
-PUT    /api/bookings/{id}     # Cập nhật trạng thái (Admin)
+POST   /api/bookings          # Book tour
+GET    /api/bookings          # Get booking list
+GET    /api/bookings/{id}     # Get booking details
+PUT    /api/bookings/{id}     # Update status (Admin)
 ```
 
 ---
 
 ## 📸 Screenshots
 
-### 🏠 Trang Chủ
+### 🏠 Homepage
 ![Homepage](docs/images/homepage.png)
 
-### 🗺️ Chi Tiết Tour
+### 🗺️ Tour Details
 ![Tour Detail](docs/images/tour-detail.png)
 
-### 🎫 Đặt Tour
+### 🎫 Book Tour
 ![Booking](docs/images/booking.png)
 
 ---
 
-## 🤝 Đóng Góp
+## 🤝 Contributing
 
-Chúng tôi hoan nghênh mọi đóng góp! Để đóng góp:
+We welcome all contributions! To contribute:
 
-1. **Fork** repository
-2. **Clone** fork của bạn về máy
-3. Tạo branch mới (`git checkout -b feature/AmazingFeature`)
-4. **Commit** thay đổi (`git commit -m 'Add some AmazingFeature'`)
-5. **Push** lên branch (`git push origin feature/AmazingFeature`)
-6. Mở **Pull Request**
+1. **Fork** the repository
+2. **Clone** your fork to your machine
+3. Create a new branch (`git checkout -b feature/AmazingFeature`)
+4. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
+5. **Push** to the branch (`git push origin feature/AmazingFeature`)
+6. Open a **Pull Request**
 
 ### 📝 Coding Standards
 
-- Tuân thủ [PSR-12](https://www.php-fig.org/psr/psr-12/) coding style
-- Viết tests cho các tính năng mới
-- Cập nhật documentation khi cần thiết
-- Commit messages rõ ràng và có ý nghĩa
+- Follow [PSR-12](https://www.php-fig.org/psr/psr-12/) coding style
+- Write tests for new features
+- Update documentation when necessary
+- Clear and meaningful commit messages
 
 ---
 
 ## 📄 License
 
-Dự án này được phân phối dưới giấy phép **MIT License**. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+This project is distributed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
 
 ```
 MIT License
@@ -449,9 +449,9 @@ Permission is hereby granted, free of charge...
 
 ---
 
-## 📞 Liên Hệ
+## 📞 Contact
 
-**Tác Giả:** Lê Trần Kim Hưng
+**Author:** Le Tran Kim Hung
 
 - 📧 Email: hungltk2004@gmail.com
 - 💼 LinkedIn: https://www.linkedin.com/in/hungltk/
@@ -464,14 +464,14 @@ Permission is hereby granted, free of charge...
 - [Laravel Framework](https://laravel.com/)
 - [Bootstrap](https://getbootstrap.com/)
 - [FontAwesome](https://fontawesome.com/)
-- Và tất cả các contributors đã đóng góp cho dự án!
+- And all contributors who have contributed to this project!
 
 ---
 
 <div align="center">
 
-**⭐️ Nếu dự án hữu ích, hãy cho một ngôi sao! ⭐️**
+**⭐️ If you find this project useful, please give it a star! ⭐️**
 
-Made with ❤️ by https://github.com/LeTranKimHung
+Made with ❤️ by [Le Tran Kim Hung](https://github.com/LeTranKimHung)
 
 </div>
