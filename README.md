@@ -472,6 +472,6 @@ Permission is hereby granted, free of charge...
 
 **⭐️ Nếu dự án hữu ích, hãy cho một ngôi sao! ⭐️**
 
-Made with ❤️ by [Your Name](https://github.com/yourusername)
+Made with ❤️ by https://github.com/LeTranKimHung
 
 </div>
