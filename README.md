@@ -10,7 +10,6 @@
 Hệ thống quản lý đặt tour du lịch toàn diện được xây dựng trên Laravel Framework
 
 [Tính Năng](#-tính-năng) •
-[Demo](#-demo) •
 [Cài Đặt](#-cài-đặt) •
 [Sử Dụng](#-sử-dụng) •
 [Đóng Góp](#-đóng-góp)
@@ -454,12 +453,9 @@ Permission is hereby granted, free of charge...
 
 **Tác Giả:** Your Name
 
-- 📧 Email: your.email@example.com
-- 🌐 Website: [yourwebsite.com](https://yourwebsite.com)
-- 💼 LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- 🐙 GitHub: [@yourusername](https://github.com/yourusername)
-
-**Link Dự Án:** [https://github.com/yourusername/travel-management-system](https://github.com/yourusername/travel-management-system)
+- 📧 Email: hungltk2004@gmail.com
+- 💼 LinkedIn: [[Your LinkedIn](https://linkedin.com/in/yourprofile)](https://www.linkedin.com/in/hungltk/)
+- 🐙 GitHub: [[@yourusername](https://github.com/yourusername)](https://github.com/LeTranKimHung)
 
 ---
 
