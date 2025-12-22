@@ -454,8 +454,8 @@ Permission is hereby granted, free of charge...
 **Tác Giả:** Your Name
 
 - 📧 Email: hungltk2004@gmail.com
-- 💼 LinkedIn: [[Your LinkedIn](https://linkedin.com/in/yourprofile)](https://www.linkedin.com/in/hungltk/)
-- 🐙 GitHub: [[@yourusername](https://github.com/yourusername)](https://github.com/LeTranKimHung)
+- 💼 LinkedIn: https://www.linkedin.com/in/hungltk/
+- 🐙 GitHub: https://github.com/LeTranKimHung
 
 ---
 
