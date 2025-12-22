@@ -227,7 +227,7 @@ Open `.env` file and update database information:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=travel_management
+DB_DATABASE=travel
 DB_USERNAME=root
 DB_PASSWORD=your_password
 ```
@@ -259,18 +259,6 @@ php artisan serve
 ```
 
 🎉 Access the application at: **http://127.0.0.1:8000**
-
-### 🔑 Default Accounts
-
-**Admin:**
-- Email: `admin@travel.com`
-- Password: `admin123`
-
-**User:**
-- Email: `user@travel.com`
-- Password: `user123`
-
----
 
 ## 📂 Project Structure
 
