@@ -104,7 +104,7 @@
                         <span><i class="fas fa-calendar-alt"></i> Ngày khởi hành: {{ \Carbon\Carbon::parse($tourDetail->startDate)->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y') }}</span>
                         <span><i class="fas fa-calendar-check"></i> Ngày kết thúc: {{ \Carbon\Carbon::parse($tourDetail->endDate)->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y') }}</span>
                     </div>
-                    <a href="{{ route('booking') }}" class="tour-book-btn">Đặt tour ngay</a>
+                    <a href="{{ route('booking', ['tourId' => $tourDetail->tourId]) }}" class="tour-book-btn">Đặt tour ngay</a>
                 </div>
             </div>
             <div class="tour-contact-box">

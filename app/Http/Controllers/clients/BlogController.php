@@ -17,7 +17,8 @@ class BlogController extends Controller
     {
         $title = "Blog";
         $tours = $this->tours->getAllTours();
-        return view('clients.error.blog', compact('title', 'tours'));
+        $posts = \Illuminate\Support\Facades\DB::table('tbl_posts')->orderBy('created_at', 'desc')->get();
+        return view('clients.error.blog', compact('title', 'tours', 'posts'));
     }
 
     /**
@@ -36,12 +37,21 @@ class BlogController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $post = \Illuminate\Support\Facades\DB::table('tbl_posts')->where('postId', $id)->first();
+        if (!$post) {
+            abort(404);
+        }
+        $title = $post->title;
+        $tours = $this->tours->getAllTours();
+        // Lấy thêm bài viết liên quan (ví dụ 3 bài khác)
+        $relatedPosts = \Illuminate\Support\Facades\DB::table('tbl_posts')
+            ->where('postId', '!=', $id)
+            ->limit(3)
+            ->get();
+
+        return view('clients.error.blog-detail', compact('title', 'post', 'tours', 'relatedPosts'));
     }
 
     /**

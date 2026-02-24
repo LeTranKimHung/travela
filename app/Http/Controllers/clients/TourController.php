@@ -4,62 +4,49 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\clients\Tours;
 
 class TourController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private $tours;
+
+    public function __construct()
     {
-        return view('clients.error.tour');
+        $this->tours = new Tours();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Route: GET /tours
+    public function index(Request $request)
     {
-        //
+        $filters = $request->all();
+        $title  = "Danh sách Tour";
+        $tours  = $this->tours->getAllTours($filters);
+        return view('clients.error.tour', compact('title', 'tours', 'filters'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    // Route: GET /filter-tours
+    public function filterTours(Request $request)
     {
-        //
-    }
+        $filters = [
+            'domain'       => $request->input('domain'),
+            'destination'  => $request->input('destination'),
+            'time'         => $request->input('time'),
+            'quantity'     => $request->input('quantity'),
+            'price_min'    => $request->input('price_min'),
+            'price_max'    => $request->input('price_max'),
+            'availability' => $request->input('availability'),
+            'start_date'   => $request->input('start_date'),
+            'end_date'     => $request->input('end_date'),
+        ];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        // Loại bỏ các filter null/rỗng
+        $filters = array_filter($filters, function ($value) {
+            return !is_null($value) && $value !== '';
+        });
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $title = "Kết quả lọc Tour";
+        $tours = $this->tours->getAllTours($filters);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('clients.error.tour', compact('title', 'tours', 'filters'));
     }
 }

@@ -5,66 +5,75 @@ namespace App\Http\Controllers\clients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\clients\Tours;
-use Illuminate\Support\Facades\Auth;
+use App\Models\clients\Booking;
+use App\Models\clients\User;
+
 class BookingController extends Controller
 {
     private $tours;
+    private $user;
+
     public function __construct()
     {
         $this->tours = new Tours();
+        $this->user  = new User();
     }
-    public function index()
+
+    // Trang đặt Tour
+    public function index(Request $request, $tourId)
     {
-        $title = "Booking";
+        $title      = "Đặt Tour";
+        $tourDetail = $this->tours->getTourDetail($tourId);
+
+        if (!$tourDetail) {
+            return redirect()->route('packages')->with('error', 'Tour không tồn tại!');
+        }
+
+        // Lấy thông tin user từ session
+        $username = $request->session()->get('username');
+        $user = $this->user->getUser($this->user->getUserId($username));
         $tours = $this->tours->getAllTours();
-        return view('clients.error.booking', compact('tours', 'title'));
+
+        return view('clients.error.booking', compact('tourDetail', 'title', 'user', 'tours'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Xử lý gửi đơn đặt tour
+    public function submit(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'tourId'          => 'required',
+            'bookingDate'     => 'required|date',
+            'numAdults'       => 'required|integer|min:1',
+            'numChild'        => 'required|integer|min:0',
+            'specialRequests' => 'nullable|string|max:255',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $username = $request->session()->get('username');
+        $userId   = $this->user->getUserId($username);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $tourDetail = $this->tours->getTourDetail($request->tourId);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if (!$tourDetail) {
+            return redirect()->route('packages')->with('error', 'Tour không tồn tại!');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $totalPrice = ($tourDetail->priceAdult * $request->numAdults)
+                    + ($tourDetail->priceChild * $request->numChild);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Lưu booking vào table tbl_booking
+        $booking = Booking::create([
+            'tourId'           => $request->tourId,
+            'userId'           => $userId,
+            'bookingDate'      => $request->bookingDate,
+            'numAdults'        => $request->numAdults,
+            'numChild'         => $request->numChild,
+            'totalPrice'       => $totalPrice,
+            'bookingStatus'    => 'pending',
+            'specialRequestes' => $request->specialRequests, // Tên cột đúng trong SQL là specialRequestes
+        ]);
+
+        // Redirect sang trang thanh toán
+        return redirect()->route('payment.index', ['bookingId' => $booking->bookingId])
+                ->with('message', 'Đã lưu thông tin đặt tour. Vui lòng thanh toán để hoàn tất!');
     }
 }

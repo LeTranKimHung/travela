@@ -13,16 +13,34 @@ class User extends Authenticatable
     public $timestamps = false;
 
     protected $fillable = [
-        'userName', 'passWord', 'email', 'phoneNumber', 'address', 'isStatus', 'role'
+        'userName', 
+        'passWord', 
+        'email', 
+        'phoneNumber', 
+        'address', 
+        'isStatus', 
+        'role'
     ];
 
     protected $hidden = [
-        'passWord', 'remember_token',
+        'passWord', 
+        'remember_token',
     ];
 
-    // Bắt buộc: Laravel cần biết cột mật khẩu tên là gì trong DB
+    // Laravel cần biết cột password
     public function getAuthPassword()
     {
         return $this->passWord;
+    }
+
+    // Tự động hash password khi set (tùy chọn)
+    public function setPassWordAttribute($value)
+    {
+        // Chỉ hash nếu chưa được hash
+        if (!password_get_info($value)['algo']) {
+            $this->attributes['passWord'] = bcrypt($value);
+        } else {
+            $this->attributes['passWord'] = $value;
+        }
     }
 }

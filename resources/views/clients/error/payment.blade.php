@@ -1,7 +1,7 @@
 @include('clients.blocks.header')
 
 @php
-    $bannerImg = isset($tours) && $tours->isNotEmpty() ? $tours->first()->images[0] : 'default.jpg';
+    $bannerImg = isset($tour) && !empty($tour->images) ? $tour->images[0] : 'default.jpg';
 @endphp
 <link rel="stylesheet" href="{{ asset('clients/css/style.css') }}">
 <div
@@ -32,7 +32,7 @@
                     <h5 class="mb-0">Tóm tắt đơn hàng</h5>
                 </div>
                 <div class="card-body p-4">
-                    <h5>{{ $tour->tourName }}</h5>
+                    <h5>{{ $tour->title }}</h5>
                     <p class="text-muted"><i class="fas fa-calendar-alt me-2"></i>Ngày khởi hành:
                         {{ $booking->bookingDate }}</p>
                     <hr>

@@ -1,0 +1,206 @@
+/* 
+    REFINED LOGIN STYLE - HIGH CONTRAST & SHARP DESIGN
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #13357b;
+    --accent-color: #1e3c72;
+    --text-dark: #1a1a1a;
+    --text-muted: #636e72;
+    --white: #ffffff;
+    --bg-light: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-light);
+}
+
+.login-template {
+    min-height: 100vh;
+    padding: 120px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.login-template .container {
+    width: 100%;
+    max-width: 1000px;
+    background: #ffffff;
+    /* Chuyển sang nền trắng đặc để ko bị mờ */
+    margin: 0 20px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+.signup-content,
+.signin-content {
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.signup-form,
+.signup-image,
+.signin-form,
+.signin-image {
+    width: 50%;
+    padding: 0 50px;
+}
+
+@media (max-width: 768px) {
+
+    .signup-form,
+    .signup-image,
+    .signin-form,
+    .signin-image {
+        width: 100%;
+        padding: 0 30px;
+        text-align: center;
+    }
+
+    .signin-image {
+        order: 2;
+        margin-top: 30px;
+    }
+
+    .signup-image {
+        order: 2;
+        margin-top: 30px;
+    }
+}
+
+.form-title {
+    margin-bottom: 40px;
+    font-weight: 700;
+    font-size: 36px;
+    color: var(--primary-color);
+    letter-spacing: -1px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 35px;
+}
+
+.form-group label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-size: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    display: block;
+    border: none;
+    border-bottom: 2px solid #dfe6e9;
+    padding: 12px 40px;
+    font-family: 'Poppins';
+    font-size: 15px;
+    background: #fff;
+    /* Nền trắng đặc để rõ nét */
+    outline: none;
+    color: #2d3436;
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #b2bec3;
+}
+
+.form-group input:focus {
+    border-bottom: 2px solid #13357b;
+}
+
+.form-submit {
+    display: inline-block;
+    background: #13357b !important;
+    /* Cố định màu xanh đậm */
+    color: #ffffff !important;
+    border: none;
+    padding: 16px 50px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(19, 53, 123, 0.4);
+    width: 100%;
+    opacity: 1 !important;
+    /* Nút bấm rộng hết phần form */
+}
+
+.form-submit:hover {
+    background: #1e3799;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(19, 53, 123, 0.4);
+}
+
+.signup-image img,
+.signin-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.signup-image-link {
+    font-size: 15px;
+    color: var(--text-muted);
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signup-image-link span {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.signup-image-link:hover span {
+    text-decoration: underline;
+}
+
+/* Alerts - Làm đậm hơn */
+.alert {
+    padding: 15px 25px;
+    margin: 20px auto;
+    max-width: 900px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.alert-danger {
+    background: #d63031;
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(214, 48, 49, 0.2);
+}
+
+.alert-success {
+    background: #00b894;
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 184, 148, 0.2);
+}
+
+#signin-section,
+#signup-section {
+    transition: opacity 0.4s ease;
+}

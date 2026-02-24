@@ -38,84 +38,41 @@
             </p>
         </div>
         <div class="row g-4 justify-content-center">
+            @foreach($posts as $post)
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item">
                     <div class="blog-img">
                         <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-1.jpg') }}" alt="Hình ảnh">
+                            @if($post->image)
+                                <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog/' . $post->image) }}" alt="{{ $post->title }}">
+                            @else
+                                <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-1.jpg') }}" alt="Default">
+                            @endif
                             <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="{{ route('blog-detail', $post->postId) }}" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
                             <small class="flex-fill text-center border-end py-2"><i
-                                    class="fa fa-calendar-alt text-primary me-2"></i>28 Tháng 1, 2050</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i
+                                    class="fa fa-calendar-alt text-primary me-2"></i>{{ date('d/m/Y', strtotime($post->created_at)) }}</small>
+                            <a href="{{ route('blog-detail', $post->postId) }}" class="btn-hover flex-fill text-center text-white border-end py-2"><i
                                     class="fa fa-thumbs-up text-primary me-2"></i>1.7K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i
+                            <a href="{{ route('blog-detail', $post->postId) }}" class="btn-hover flex-fill text-center text-white py-2"><i
                                     class="fa fa-comments text-primary me-2"></i>1K</a>
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Đăng bởi: Royal Hamblin </p>
-                        <a href="#" class="h4">Chuyến Phiêu Lưu</a>
-                        <p class="my-3">Một hành trình tuyệt vời qua những vùng đất mới, nơi cảnh sắc thiên nhiên hòa quyện cùng văn hóa đặc trưng.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
+                        <p class="mb-3">Đăng bởi: {{ $post->author }} </p>
+                        <a href="{{ route('blog-detail', $post->postId) }}" class="h4">{{ $post->title }}</a>
+                        <p class="my-3 text-truncate-2">{{ $post->summary }}</p>
+                        <a href="{{ route('blog-detail', $post->postId) }}" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-2.jpg') }}" alt="Hình ảnh">
-                            <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2"><i
-                                    class="fa fa-calendar-alt text-primary me-2"></i>28 Tháng 1, 2050</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i
-                                    class="fa fa-thumbs-up text-primary me-2"></i>1.7K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i
-                                    class="fa fa-comments text-primary me-2"></i>1K</a>
-                        </div>
-                    </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Đăng bởi: Royal Hamblin </p>
-                        <a href="#" class="h4">Khám Phá Văn Hóa</a>
-                        <p class="my-3">Trải nghiệm nét văn hóa độc đáo, ẩm thực đặc sản và những phong tục tập quán thú vị của địa phương.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-3.jpg') }}" alt="Hình ảnh">
-                            <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2"><i
-                                    class="fa fa-calendar-alt text-primary me-2"></i>28 Tháng 1, 2050</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i
-                                    class="fa fa-thumbs-up text-primary me-2"></i>1.7K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i
-                                    class="fa fa-comments text-primary me-2"></i>1K</a>
-                        </div>
-                    </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Đăng bởi: Royal Hamblin </p>
-                        <a href="#" class="h4">Hành Trình Thiên Nhiên</a>
-                        <p class="my-3">Khám phá vẻ đẹp hùng vĩ của núi rừng, biển cả và những kỳ quan thiên nhiên tuyệt diệu.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+            @if($posts->isEmpty())
+                <div class="text-center col-12">Chưa có bài viết nào.</div>
+            @endif
         </div>
     </div>
 </div>

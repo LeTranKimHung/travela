@@ -43,7 +43,7 @@
             <div class="col-lg-6">
                 <div class="bg-light shadow rounded p-4">
                     <h3 class="mb-4">Thông Tin Đặt Tour</h3>
-                    <form action="{{ route('payment') }}" method="POST">
+                    <form action="{{ route('booking.submit') }}" method="POST">
                         @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -75,7 +75,9 @@
                                     <select class="form-select" id="tourId" name="tourId" required>
                                         <option value="">-- Chọn Tour --</option>
                                         @foreach($tours as $tour)
-                                            <option value="{{ $tour->tourId }}">{{ $tour->title }}</option>
+                                            <option value="{{ $tour->tourId }}" {{ (isset($tourDetail) && $tourDetail->tourId == $tour->tourId) ? 'selected' : '' }}>
+                                                {{ $tour->title }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     <label for="tourId">Điểm đến hấp dẫn</label>
@@ -84,7 +86,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="date" class="form-control" id="bookingDate" name="bookingDate" required>
+                                    <input type="date" class="form-control" id="bookingDate" name="bookingDate" 
+                                        value="{{ isset($tourDetail) ? \Carbon\Carbon::parse($tourDetail->startDate)->format('Y-m-d') : '' }}" required>
                                     <label for="bookingDate">Ngày khởi hành</label>
                                 </div>
                             </div>

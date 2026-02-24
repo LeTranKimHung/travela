@@ -25,9 +25,12 @@ class Tours extends Model
             $query->where('domain', $filters['domain']);
         }
         
-        // Lọc theo điểm đến
+        // Lọc theo điểm đến hoặc tiêu đề tour
         if (!empty($filters['destination'])) {
-            $query->where('destination', 'LIKE', '%' . $filters['destination'] . '%');
+            $query->where(function($q) use ($filters) {
+                $q->where('destination', 'LIKE', '%' . $filters['destination'] . '%')
+                  ->orWhere('title', 'LIKE', '%' . $filters['destination'] . '%');
+            });
         }
         
         // Lọc theo thời gian tour (time)

@@ -261,334 +261,53 @@
         <div class="tab-content">
             <div id="GalleryTab-1" class="tab-pane fade show p-0 active">
                 <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-1.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
+                    @foreach($galleries as $index => $item)
+                        @php
+                            // Tạo layout so le: 2-3-2-3-2
+                            $colClass = 'col-sm-6 col-md-6 col-lg-3';
+                            if ($index % 5 == 1 || $index % 5 == 3) {
+                                $colClass .= ' col-xl-3';
+                            } else {
+                                $colClass .= ' col-xl-2';
+                            }
+                        @endphp
+                        <div class="{{ $colClass }}">
+                            <div class="gallery-item h-100">
+                                <img src="{{ asset('clients/img/gallery/' . $item->image) }}" class="img-fluid w-100 h-100 rounded"
+                                    alt="{{ $item->title }}">
+                                <div class="gallery-content">
+                                    <div class="gallery-info">
+                                        <h5 class="text-white text-uppercase mb-2">{{ $item->category }}</h5>
+                                        <a href="#" class="btn-hover text-white">{{ $item->title }} <i
+                                                class="fa fa-arrow-right ms-2"></i></a>
+                                    </div>
+                                </div>
+                                <div class="gallery-plus-icon">
+                                    <a href="{{ asset('clients/img/gallery/' . $item->image) }}" data-lightbox="gallery-{{ $item->galleryId }}"
+                                        class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                 </div>
                             </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-1.jpg') }}" data-lightbox="gallery-1"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-2.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-2.jpg') }}" data-lightbox="gallery-2"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
+                    @endforeach
+                    @if($galleries->isEmpty())
+                        <div class="col-12 text-center py-5">
+                            <p class="text-muted">Chưa có ảnh nào trong bộ sưu tập. Hãy thêm từ Admin!</p>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-3.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-3.jpg') }}" data-lightbox="gallery-3"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-4.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-4.jpg') }}" data-lightbox="gallery-4"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-5.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-5.jpg') }}" data-lightbox="gallery-5"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-6.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-6.jpg') }}" data-lightbox="gallery-6"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-7.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-7.jpg') }}" data-lightbox="gallery-7"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-8.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-8.jpg') }}" data-lightbox="gallery-8"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-9.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-9.jpg') }}" data-lightbox="gallery-9"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-10.jpg') }}"
-                                class="img-fluid w-100 h-100 rounded" alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-10.jpg') }}" data-lightbox="gallery-10"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
-            <div id="GalleryTab-2" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-2.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-2.jpg') }}" data-lightbox="gallery-2"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-3.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-3.jpg') }}" data-lightbox="gallery-3"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="GalleryTab-3" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-2.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-2.jpg') }}" data-lightbox="gallery-2"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-3.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-3.jpg') }}" data-lightbox="gallery-3"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="GalleryTab-4" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-2.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-2.jpg') }}" data-lightbox="gallery-2"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-3.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-3.jpg') }}" data-lightbox="gallery-3"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="GalleryTab-5" class="tab-pane fade show p-0">
-                <div class="row g-2">
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-2.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-2.jpg') }}" data-lightbox="gallery-2"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
-                        <div class="gallery-item h-100">
-                            <img src="{{ asset('clients/img/gallery-3.jpg') }}" class="img-fluid w-100 h-100 rounded"
-                                alt="Image">
-                            <div class="gallery-content">
-                                <div class="gallery-info">
-                                    <h5 class="text-white text-uppercase mb-2">World Tour</h5>
-                                    <a href="#" class="btn-hover text-white">View All Place <i
-                                            class="fa fa-arrow-right ms-2"></i></a>
-                                </div>
-                            </div>
-                            <div class="gallery-plus-icon">
-                                <a href="{{ asset('clients/img/gallery-3.jpg') }}" data-lightbox="gallery-3"
-                                    class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Các tab khác có thể lọc theo category nếu cần, tạm thời ẩn hoặc để trống để chờ nâng cấp -->
+            <!-- Các tab khác có thể lọc theo category nếu cần, tạm thời ẩn hoặc để trống để chờ nâng cấp -->
         </div>
     </div>
 </div>
 <!-- Gallery End -->
+        </div>
+    </div>
+</div>
+<!-- Gallery End -->
+
+
 
 
 
@@ -605,87 +324,47 @@
             </p>
         </div>
         <div class="row g-4 justify-content-center">
+            @foreach($posts as $post)
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item">
                     <div class="blog-img">
                         <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-1.jpg') }}" alt="Hình ảnh">
+                            @if($post->image)
+                                <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog/' . $post->image) }}" alt="{{ $post->title }}">
+                            @else
+                                <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-1.jpg') }}" alt="Default">
+                            @endif
                             <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <a href="{{ route('blog-detail', $post->postId) }}" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
                             </div>
                         </div>
                         <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
                             <small class="flex-fill text-center border-end py-2"><i
-                                    class="fa fa-calendar-alt text-primary me-2"></i>28 Tháng 1, 2050</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i
+                                    class="fa fa-calendar-alt text-primary me-2"></i>{{ date('d/m/Y', strtotime($post->created_at)) }}</small>
+                            <a href="{{ route('blog-detail', $post->postId) }}" class="btn-hover flex-fill text-center text-white border-end py-2"><i
                                     class="fa fa-thumbs-up text-primary me-2"></i>1.7K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i
+                            <a href="{{ route('blog-detail', $post->postId) }}" class="btn-hover flex-fill text-center text-white py-2"><i
                                     class="fa fa-comments text-primary me-2"></i>1K</a>
                         </div>
                     </div>
                     <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Đăng bởi: Royal Hamblin </p>
-                        <a href="#" class="h4">Chuyến Phiêu Lưu</a>
-                        <p class="my-3">Một hành trình tuyệt vời qua những vùng đất mới, nơi cảnh sắc thiên nhiên hòa quyện cùng văn hóa đặc trưng.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
+                        <p class="mb-3">Đăng bởi: {{ $post->author }} </p>
+                        <a href="{{ route('blog-detail', $post->postId) }}" class="h4">{{ $post->title }}</a>
+                        <p class="my-3 text-truncate-2">{{ $post->summary }}</p>
+                        <a href="{{ route('blog-detail', $post->postId) }}" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-2.jpg') }}" alt="Hình ảnh">
-                            <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2"><i
-                                    class="fa fa-calendar-alt text-primary me-2"></i>28 Tháng 1, 2050</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i
-                                    class="fa fa-thumbs-up text-primary me-2"></i>1.7K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i
-                                    class="fa fa-comments text-primary me-2"></i>1K</a>
-                        </div>
-                    </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Đăng bởi: Royal Hamblin </p>
-                        <a href="#" class="h4">Khám Phá Văn Hóa</a>
-                        <p class="my-3">Trải nghiệm nét văn hóa độc đáo, ẩm thực đặc sản và những phong tục tập quán thú vị của địa phương.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
-                    </div>
+            @endforeach
+            @if($posts->isEmpty())
+                <div class="text-center col-12">
+                    <p class="text-muted">Chưa có bài viết nào dư kiến hiển thị ở đây. Hãy thêm bài viết từ Admin!</p>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
-                    <div class="blog-img">
-                        <div class="blog-img-inner">
-                            <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-3.jpg') }}" alt="Hình ảnh">
-                            <div class="blog-icon">
-                                <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog-info d-flex align-items-center border border-start-0 border-end-0">
-                            <small class="flex-fill text-center border-end py-2"><i
-                                    class="fa fa-calendar-alt text-primary me-2"></i>28 Tháng 1, 2050</small>
-                            <a href="#" class="btn-hover flex-fill text-center text-white border-end py-2"><i
-                                    class="fa fa-thumbs-up text-primary me-2"></i>1.7K</a>
-                            <a href="#" class="btn-hover flex-fill text-center text-white py-2"><i
-                                    class="fa fa-comments text-primary me-2"></i>1K</a>
-                        </div>
-                    </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
-                        <p class="mb-3">Đăng bởi: Royal Hamblin </p>
-                        <a href="#" class="h4">Hành Trình Thiên Nhiên</a>
-                        <p class="my-3">Khám phá vẻ đẹp hùng vĩ của núi rừng, biển cả và những kỳ quan thiên nhiên tuyệt diệu.</p>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
-                    </div>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
 </div>
+<!-- Blog End -->
 
 <!-- Tour Booking Start -->
 <div class="container-fluid booking py-5">
@@ -778,29 +457,88 @@
 </div>
 
 <!-- Tour Booking End -->
-<!-- Blog End -->
 
-{{-- <!-- Testimonial Start -->
+
+<!-- Testimonial Start -->
+<style>
+    .testimonial .testimonial-carousel .owl-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        margin-top: 0 !important;
+    }
+    .testimonial .testimonial-carousel .owl-nav .owl-prev,
+    .testimonial .testimonial-carousel .owl-nav .owl-next {
+        pointer-events: auto;
+        width: 45px;
+        height: 45px;
+        background: var(--bs-primary, #13357B) !important;
+        color: #fff !important;
+        border-radius: 50% !important;
+        font-size: 20px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: all 0.3s;
+    }
+    .testimonial .testimonial-carousel .owl-nav .owl-prev:hover,
+    .testimonial .testimonial-carousel .owl-nav .owl-next:hover {
+        background: var(--bs-primary, #0d2b66) !important;
+        transform: scale(1.1);
+    }
+    .testimonial .testimonial-carousel .owl-nav .owl-prev {
+        margin-left: -22px;
+    }
+    .testimonial .testimonial-carousel .owl-nav .owl-next {
+        margin-right: -22px;
+    }
+    .testimonial .testimonial-carousel {
+        position: relative;
+    }
+    .testimonial .testimonial-carousel .owl-dots {
+        margin-top: 25px !important;
+    }
+    .testimonial .testimonial-comment {
+        min-height: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
 <div class="container-fluid testimonial py-5">
     <div class="container py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Testimonial</h5>
-            <h1 class="mb-0">Our Clients Say!!!</h1>
+            <h5 class="section-title px-3">Đánh Giá</h5>
+            <h1 class="mb-0">Khách Hàng Nói Gì Về Chúng Tôi!</h1>
         </div>
         <div class="testimonial-carousel owl-carousel">
+            @foreach($reviews as $review)
             <div class="testimonial-item text-center rounded pb-4">
                 <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-                        nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi
-                        porro officiis. Vero reiciendis,
-                    </p>
+                    <p class="text-center mb-3">{{ $review->content }}</p>
+                    <hr class="mx-auto" style="width: 60px; border-color: var(--bs-primary, #13357B); opacity: 0.5;">
+                    <h5 class="mb-1">{{ $review->name }}</h5>
+                    <p class="text-muted mb-2" style="font-size: 14px;">{{ $review->location }}</p>
+                    <div class="d-flex justify-content-center">
+                        @for($i = 1; $i <= 5; $i++)
+                            <i class="fas fa-star {{ $i <= $review->rating ? 'text-primary' : 'text-secondary opacity-25' }}"></i>
+                        @endfor
+                    </div>
                 </div>
-                <div class="testimonial-img p-1">
-                    <img src="clients/img/testimonial-1.jpg" class="img-fluid rounded-circle" alt="Image">
-                </div>
-                <div style="margin-top: -35px;">
-                    <h5 class="mb-0">John Abraham</h5>
-                    <p class="mb-0">New York, USA</p>
+            </div>
+            @endforeach
+            @if($reviews->isEmpty())
+            <div class="testimonial-item text-center rounded pb-4">
+                <div class="testimonial-comment bg-light rounded p-4">
+                    <p class="text-center mb-3">Chưa có đánh giá nào. Hãy thêm đánh giá từ trang Admin!</p>
+                    <hr class="mx-auto" style="width: 60px; border-color: var(--bs-primary, #13357B); opacity: 0.5;">
+                    <h5 class="mb-1">Travela</h5>
+                    <p class="text-muted mb-2" style="font-size: 14px;">Việt Nam</p>
                     <div class="d-flex justify-content-center">
                         <i class="fas fa-star text-primary"></i>
                         <i class="fas fa-star text-primary"></i>
@@ -810,78 +548,13 @@
                     </div>
                 </div>
             </div>
-            <div class="testimonial-item text-center rounded pb-4">
-                <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-                        nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi
-                        porro officiis. Vero reiciendis,
-                    </p>
-                </div>
-                <div class="testimonial-img p-1">
-                    <img src="clients/img/testimonial-2.jpg" class="img-fluid rounded-circle" alt="Image">
-                </div>
-                <div style="margin-top: -35px;">
-                    <h5 class="mb-0">John Abraham</h5>
-                    <p class="mb-0">New York, USA</p>
-                    <div class="d-flex justify-content-center">
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item text-center rounded pb-4">
-                <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-                        nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi
-                        porro officiis. Vero reiciendis,
-                    </p>
-                </div>
-                <div class="testimonial-img p-1">
-                    <img src="clients/img/testimonial-3.jpg" class="img-fluid rounded-circle" alt="Image">
-                </div>
-                <div style="margin-top: -35px;">
-                    <h5 class="mb-0">John Abraham</h5>
-                    <p class="mb-0">New York, USA</p>
-                    <div class="d-flex justify-content-center">
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-item text-center rounded pb-4">
-                <div class="testimonial-comment bg-light rounded p-4">
-                    <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-                        nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi
-                        porro officiis. Vero reiciendis,
-                    </p>
-                </div>
-                <div class="testimonial-img p-1">
-                    <img src="clients/img/testimonial-4.jpg" class="img-fluid rounded-circle" alt="Image">
-                </div>
-                <div style="margin-top: -35px;">
-                    <h5 class="mb-0">John Abraham</h5>
-                    <p class="mb-0">New York, USA</p>
-                    <div class="d-flex justify-content-center">
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                        <i class="fas fa-star text-primary"></i>
-                    </div>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
-</div> --}}
+</div>
 <!-- Testimonial End -->
 
-{{-- <!-- Subscribe Start -->
+<!-- Subscribe Start -->
 <div class="container-fluid subscribe py-5">
     <div class="container text-center py-5">
         <div class="mx-auto text-center" style="max-width: 900px;">
@@ -899,7 +572,6 @@
             </div>
         </div>
     </div>
-</div> --}}
-
+</div>
 <!-- Subscribe End -->
 @include('clients.blocks.footer')

@@ -11,7 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // ✅ THÊM DÒNG NÀY
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'checkLoginClient' => \App\Http\Middleware\CheckLoggedInClients::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

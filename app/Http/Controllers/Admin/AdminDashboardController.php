@@ -7,6 +7,12 @@ class AdminDashboardController extends Controller {
     public function index() {
         $tourCount = DB::table('tbl_tours')->count();
         $bookingCount = DB::table('tbl_booking')->count();
-        return view('admin.index', compact('tourCount', 'bookingCount'));
+        
+        // Tính doanh thu từ các đơn hàng đã xác nhận (confirmed)
+        $totalRevenue = DB::table('tbl_booking')
+            ->where('bookingStatus', 'confirmed')
+            ->sum('totalPrice');
+
+        return view('admin.index', compact('tourCount', 'bookingCount', 'totalRevenue'));
     }
 }
