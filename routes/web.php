@@ -14,6 +14,7 @@ use App\Http\Controllers\clients\ContactController;
 use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\UserController;
 use App\Http\Controllers\clients\PaymentController;
+use App\Http\Controllers\clients\ChatController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\TourAdminController;
 use App\Http\Controllers\Admin\BookingAdminController;
@@ -48,6 +49,12 @@ Route::get('/tours', [TourController::class, 'index'])->name('tours');
 Route::get('/filter-tours', [TourController::class, 'filterTours'])->name('filter.tours');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
+
+// ===== CHAT API =====
+Route::get('/chat/history', [ChatController::class, 'getHistory'])->name('chat.history');
+Route::get('/chat/sessions', [ChatController::class, 'getSessions'])->name('chat.sessions');
+Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+Route::post('/chat/clear', [ChatController::class, 'clearHistory'])->name('chat.clear');
 
 // ===== PROTECTED ROUTES (Require Login) =====
 
