@@ -4,7 +4,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Services\NotificationService;
+
 class TourAdminController extends Controller {
+    protected $notif;
+
+    public function __construct(NotificationService $notif)
+    {
+        $this->notif = $notif;
+    }
+
     public function index() {
         $tours = DB::table('tbl_tours')->get();
         return view('admin.tours.index', compact('tours'));
@@ -53,6 +62,18 @@ class TourAdminController extends Controller {
                     'uploadDate' => now()
                 ]);
             }
+        }
+        
+        // Broadcast notification (nếu có user thì thông báo)
+        try {
+            $this->notif->broadcast(
+                'new_tour',
+                'Tour du lịch mới!',
+                'Khám phá ngay: ' . $request->title . ' tại ' . $request->destination . '. Đặt chỗ ngay để nhận ưu đãi!',
+                route('tour-detail', ['id' => $tourId])
+            );
+        } catch (\Exception $e) {
+            // Log if needed, but don't fail the request
         }
 
         return redirect()->route('admin.tours.index')->with('success', 'Thêm mới Tour thành công');

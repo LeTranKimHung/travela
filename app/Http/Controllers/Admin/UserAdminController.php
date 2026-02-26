@@ -34,7 +34,7 @@ class UserAdminController extends Controller
             'email' => $request->email,
             'passWord' => Hash::make($request->passWord),
             'fullName' => $request->fullName,
-            'role' => $request->role ?? 'u',
+            'role' => $request->role ?? 'c',
             'isActive' => $request->isActive ?? 'y',
         ]);
 
@@ -58,7 +58,7 @@ class UserAdminController extends Controller
         $data = [
             'email' => $request->email,
             'fullName' => $request->fullName,
-            'role' => $request->role ?? 'u',
+            'role' => $request->role ?? 'c',
             'isActive' => $request->isActive ?? 'y',
         ];
 

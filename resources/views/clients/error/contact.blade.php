@@ -1,110 +1,107 @@
 @include('clients.blocks.header')
-@php
-    $bannerImg = $tours->first()->images[0] ?? 'default.jpg';
-@endphp
 <link rel="stylesheet" href="{{ asset('clients/css/style.css') }}">
-<div
-    style="background: url('{{ asset('clients/img/galery-tour/' . $bannerImg) }}') center center/cover no-repeat; padding: 150px 0 28px 0; position: relative;">
-    <div style="background:rgba(155, 155, 158, 0.7); position:absolute; inset:0;"></div>
+
+@php $bannerImg = isset($tours) && $tours->isNotEmpty() ? $tours->first()->images[0] : null; @endphp
+
+{{-- Hero Banner --}}
+<div style="background: url('{{ $bannerImg ? asset('clients/img/galery-tour/'.$bannerImg) : asset('clients/img/about-img.jpg') }}') center center/cover no-repeat; padding:130px 0 50px; position:relative;">
+    <div style="background:linear-gradient(180deg,rgba(15,23,42,0.7) 0%,rgba(15,23,42,0.45) 100%); position:absolute; inset:0;"></div>
     <div class="container" style="position:relative; z-index:2;">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb" style="background:transparent; margin-bottom:0;">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('home') }}" style="color:#fff; text-decoration:underline;">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page" style="color:#fff;">
-                    {{ $title ?? 'Liên hệ' }}
-                </li>
+            <ol class="breadcrumb mb-2" style="background:transparent;">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}" style="color:#93c5fd; text-decoration:none;"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
+                <li class="breadcrumb-item active" style="color:#fff;">Liên hệ</li>
             </ol>
         </nav>
-
-    </div>
-</div>
-<!-- Header End -->
-
-<!-- Contact Start -->
-<div class="container-fluid contact bg-light py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Liên hệ với chúng tôi</h5>
-            <h1 class="mb-0">Liên hệ để được hỗ trợ</h1>
-        </div>
-        <div class="row g-5 align-items-center">
-            <div class="col-lg-4">
-                <div class="bg-white rounded p-4">
-                    <div class="text-center mb-4">
-                        <i class="fa fa-map-marker-alt fa-3x text-primary"></i>
-                        <h4 class="text-primary">
-                            Địa chỉ
-                        </h4>
-                        <p class="mb-0">10/80c Song Hành Xa Lộ Hà Nội, Phường Tân Phú, Thủ Đức, <br> Hồ Chí Minh, Vietnam</p>
-                    </div>
-                    <div class="text-center mb-4">
-                        <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
-                        <h4 class="text-primary">Điện thoại</h4>
-                        <p class="mb-0">+012 345 67890</p>
-                        <p class="mb-0">+012 345 67890</p>
-                    </div>
-
-                    <div class="text-center">
-                        <i class="fa fa-envelope-open fa-3x text-primary mb-3"></i>
-                        <h4 class="text-primary">Email</h4>
-                        <p class="mb-0">hungltk2004@gmail.com</p>
-                        {{-- <p class="mb-0">info@example.com</p> --}}
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <h3 class="mb-2">Gửi cho chúng tôi tin nhắn</h3>
-                {{-- <p class="mb-4">Mẫu liên hệ hiện chưa hoạt động. Bạn có thể tải về một mẫu liên hệ đầy đủ chức năng với Ajax & PHP chỉ trong vài phút. Chỉ cần sao chép và dán các tệp, thêm một chút mã và hoàn tất. <a
-                        href="https://htmlcodex.com/contact-form">Tải xuống ngay</a>.</p> --}}
-                <form>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control border-0" id="name"
-                                    placeholder="Tên của bạn">
-                                <label for="name">Tên của bạn</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="email" class="form-control border-0" id="email"
-                                    placeholder="Email của bạn">
-                                <label for="email">Email của bạn</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <input type="text" class="form-control border-0" id="subject"
-                                    placeholder="Chủ đề">
-                                <label for="subject">Chủ đề</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <textarea class="form-control border-0" placeholder="Nhập tin nhắn ở đây" id="message" style="height: 160px"></textarea>
-                                <label for="message">Tin nhắn</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Gửi tin nhắn</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-12">
-                <div class="rounded">
-                    <iframe class="rounded w-100" style="height: 450px;"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5469984176198!2d106.78279807480604!3d10.855042689298537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527c3debb5aad%3A0x5fb58956eb4194d0!2zxJDhuqFpIEjhu41jIEh1dGVjaCBLaHUgRQ!5e1!3m2!1sen!2s!4v1759540416698!5m2!1sen!2s"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-        </div>
+        <h1 style="color:#fff; font-weight:700; font-size:2.2rem; margin-bottom:8px;">
+            <i class="fas fa-envelope me-2" style="color:#38bdf8;"></i>Liên Hệ Với Chúng Tôi
+        </h1>
+        <p style="color:rgba(255,255,255,0.8); font-size:1rem; margin:0;">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
     </div>
 </div>
 
-<!-- Contact End -->
+{{-- Contact Content --}}
+<div style="background:#f8fafc;" class="py-5">
+    <div class="container py-4">
+
+        {{-- Info Cards --}}
+        <div class="row g-4 mb-5">
+            @foreach([['fas fa-map-marker-alt','#ef4444','Địa chỉ','10/80c Song Hành Xa Lộ Hà Nội, Phường Tân Phú, Thủ Đức, Hồ Chí Minh'],['fas fa-phone-alt','#0ea5e9','Điện thoại','+84 123 456 789'],['fas fa-envelope','#10b981','Email','hungltk2004@gmail.com'],['fas fa-clock','#f59e0b','Giờ làm việc','Thứ 2 - Thứ 7: 8:00 - 18:00']] as [$icon,$color,$label,$val])
+            <div class="col-md-6 col-lg-3">
+                <div style="background:#fff; border-radius:16px; padding:28px 20px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.06); height:100%; transition:transform 0.2s;" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+                    <div style="width:56px; height:56px; border-radius:16px; background:{{ $color }}18; display:flex; align-items:center; justify-content:center; margin:0 auto 14px;">
+                        <i class="{{ $icon }}" style="font-size:1.4rem; color:{{ $color }};"></i>
+                    </div>
+                    <div style="font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#94a3b8; margin-bottom:6px;">{{ $label }}</div>
+                    <div style="font-size:0.9rem; font-weight:600; color:#334155; line-height:1.5;">{{ $val }}</div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        <div class="row g-4">
+            {{-- Contact Form --}}
+            <div class="col-lg-7">
+                <div style="background:#fff; border-radius:16px; padding:36px; box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+                    <h4 style="font-weight:700; color:#0f172a; margin-bottom:6px;">Gửi tin nhắn cho chúng tôi</h4>
+                    <p style="color:#64748b; font-size:0.9rem; margin-bottom:28px;">Điền vào form bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ</p>
+                    <form action="{{ route('contact.submit') }}" method="POST">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label style="font-size:0.82rem; font-weight:600; color:#374151; display:block; margin-bottom:6px;">Họ và tên *</label>
+                                <input type="text" name="name" class="form-control" placeholder="Nhập họ tên của bạn" required style="border-radius:10px; border:1.5px solid #e2e8f0; padding:10px 14px; font-size:0.9rem;">
+                            </div>
+                            <div class="col-md-6">
+                                <label style="font-size:0.82rem; font-weight:600; color:#374151; display:block; margin-bottom:6px;">Email *</label>
+                                <input type="email" name="email" class="form-control" placeholder="email@gmail.com" required style="border-radius:10px; border:1.5px solid #e2e8f0; padding:10px 14px; font-size:0.9rem;">
+                            </div>
+                            <div class="col-12">
+                                <label style="font-size:0.82rem; font-weight:600; color:#374151; display:block; margin-bottom:6px;">Số điện thoại</label>
+                                <input type="text" name="phone" class="form-control" placeholder="+84 xxx xxx xxx" style="border-radius:10px; border:1.5px solid #e2e8f0; padding:10px 14px; font-size:0.9rem;">
+                            </div>
+                            <div class="col-12">
+                                <label style="font-size:0.82rem; font-weight:600; color:#374151; display:block; margin-bottom:6px;">Chủ đề</label>
+                                <input type="text" name="subject" class="form-control" placeholder="Bạn muốn hỏi về điều gì?" style="border-radius:10px; border:1.5px solid #e2e8f0; padding:10px 14px; font-size:0.9rem;">
+                            </div>
+                            <div class="col-12">
+                                <label style="font-size:0.82rem; font-weight:600; color:#374151; display:block; margin-bottom:6px;">Nội dung tin nhắn *</label>
+                                <textarea name="message" class="form-control" rows="5" placeholder="Nhập nội dung tin nhắn của bạn..." required style="border-radius:10px; border:1.5px solid #e2e8f0; padding:10px 14px; font-size:0.9rem; resize:vertical;"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" style="width:100%; background:linear-gradient(135deg,#0ea5e9,#38bdf8); color:#fff; border:none; padding:13px; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; transition:opacity 0.2s; display:flex; align-items:center; justify-content:center; gap:8px;" onmouseenter="this.style.opacity='0.88'" onmouseleave="this.style.opacity='1'">
+                                    <i class="fas fa-paper-plane"></i> Gửi tin nhắn
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Map --}}
+            <div class="col-lg-5">
+                <div style="background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.07); height:100%; display:flex; flex-direction:column;">
+                    <div style="padding:20px 24px; border-bottom:1px solid #f1f5f9;">
+                        <h6 style="font-weight:700; color:#0f172a; margin:0;">
+                            <i class="fas fa-map-pin me-2" style="color:#ef4444;"></i>Vị trí của chúng tôi
+                        </h6>
+                    </div>
+                    <div style="flex:1; min-height:350px;">
+                        <iframe class="w-100 h-100" style="min-height:350px; border:0; display:block;"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5469984176198!2d106.78279807480604!3d10.855042689298537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527c3debb5aad%3A0x5fb58956eb4194d0!2zxJDhuqFpIEjhu41jIEh1dGVjaCBLaHUgRQ!5e1!3m2!1sen!2s!4v1759540416698!5m2!1sen!2s"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div style="padding:16px 24px; background:#f8fafc;">
+                        <div style="display:flex; gap:8px; align-items:flex-start;">
+                            <i class="fas fa-map-marker-alt" style="color:#ef4444; margin-top:2px; flex-shrink:0;"></i>
+                            <span style="font-size:0.85rem; color:#475569; line-height:1.5;">10/80c Song Hành Xa Lộ Hà Nội, Phường Tân Phú, Thủ Đức, Hồ Chí Minh</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @include('clients.blocks.footer')

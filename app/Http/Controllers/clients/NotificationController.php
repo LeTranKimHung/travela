@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Http\Controllers\clients;
+
+use App\Http\Controllers\Controller;
+use App\Services\NotificationService;
+use Illuminate\Http\Request;
+
+class NotificationController extends Controller
+{
+    protected NotificationService $notif;
+
+    public function __construct(NotificationService $notif)
+    {
+        $this->notif = $notif;
+    }
+
+    /**
+     * GET /notifications — Lấy danh sách thông báo (AJAX)
+     */
+    public function index(Request $request)
+    {
+        $userId = $this->getUserId();
+
+        if (!$userId) {
+            return response()->json(['notifications' => [], 'unread' => 0]);
+        }
+
+        $notifications = $this->notif->getAll((int) $userId);
+        $unread        = $this->notif->countUnread((int) $userId);
+
+        // Format thời gian relative
+        $notifications = $notifications->map(function ($n) {
+            $n->time_ago  = $this->timeAgo($n->created_at);
+            $n->icon      = $this->typeIcon($n->type);
+            $n->color     = $this->typeColor($n->type);
+            return $n;
+        });
+
+        return response()->json([
+            'notifications' => $notifications,
+            'unread'        => $unread,
+        ]);
+    }
+
+    /**
+     * POST /notifications/{id}/read — Đánh dấu đã đọc
+     */
+    public function markRead(Request $request, int $id)
+    {
+        $userId = $this->getUserId();
+        if (!$userId) return response()->json(['ok' => false]);
+        $this->notif->markRead($id, (int) $userId);
+        return response()->json(['ok' => true]);
+    }
+
+    /**
+     * POST /notifications/read-all — Đánh dấu tất cả đã đọc
+     */
+    public function markAllRead(Request $request)
+    {
+        $userId = $this->getUserId();
+        if (!$userId) return response()->json(['ok' => false]);
+        $this->notif->markAllRead((int) $userId);
+        return response()->json(['ok' => true]);
+    }
+
+    // ────────── Helpers ──────────
+
+    private function getUserId()
+    {
+        $userId = session('userId');
+        if (!$userId && session('username')) {
+            $user = \Illuminate\Support\Facades\DB::table('tbl_user')
+                ->where('userName', session('username'))
+                ->first();
+            if ($user) {
+                $userId = $user->userId;
+                session(['userId' => $userId]);
+            }
+        }
+        return $userId;
+    }
+
+    private function timeAgo(string $datetime): string
+    {
+        $diff = now()->diffInSeconds(\Carbon\Carbon::parse($datetime));
+        if ($diff < 60)         return 'Vừa xong';
+        if ($diff < 3600)       return floor($diff / 60) . ' phút trước';
+        if ($diff < 86400)      return floor($diff / 3600) . ' giờ trước';
+        if ($diff < 604800)     return floor($diff / 86400) . ' ngày trước';
+        return \Carbon\Carbon::parse($datetime)->format('d/m/Y');
+    }
+
+    private function typeIcon(string $type): string
+    {
+        return match ($type) {
+            'booking_confirmed'  => 'fas fa-check-circle',
+            'booking_cancelled'  => 'fas fa-times-circle',
+            'booking_pending'    => 'fas fa-clock',
+            'new_post'           => 'fas fa-newspaper',
+            default              => 'fas fa-bell',
+        };
+    }
+
+    private function typeColor(string $type): string
+    {
+        return match ($type) {
+            'booking_confirmed'  => '#10b981',
+            'booking_cancelled'  => '#ef4444',
+            'booking_pending'    => '#f59e0b',
+            'new_post'           => '#0ea5e9',
+            default              => '#6366f1',
+        };
+    }
+}

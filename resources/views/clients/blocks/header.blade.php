@@ -241,6 +241,50 @@
                         </button>
                     </form>
 
+                    @if($username)
+                    {{-- ===== NOTIFICATION BELL ===== --}}
+                    <div class="dropdown me-2" id="notif-dropdown-wrap">
+                        <button class="btn position-relative notif-bell-btn" id="notifBell"
+                                data-bs-toggle="dropdown" aria-expanded="false"
+                                title="Thông báo"
+                                style="width:42px; height:42px; border-radius:50%; background:#fff; border:1.5px solid #e9ecef; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.06); transition:all 0.2s; padding:0;"
+                                onmouseenter="this.style.background='#f1f5f9'; this.style.transform='translateY(-1px)'"
+                                onmouseleave="this.style.background='#fff'; this.style.transform=''">
+                            <i class="fas fa-bell" style="font-size:1rem; color:#475569;"></i>
+                            <span id="notif-badge" style="position:absolute; top:4px; right:4px; background:#ef4444; color:#fff; font-size:0.6rem; font-weight:700; min-width:16px; height:16px; border-radius:8px; display:none; align-items:center; justify-content:center; padding:0 3px; line-height:16px; border:2px solid #fff;"></span>
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-end" id="notif-menu"
+                             style="width:360px; border:none; box-shadow:0 12px 40px rgba(0,0,0,0.14); border-radius:16px; padding:0; overflow:hidden; margin-top:10px !important;">
+
+                            {{-- Header --}}
+                            <div style="background:linear-gradient(135deg,#0f172a,#1e3a5f); padding:14px 18px; display:flex; align-items:center; justify-content:space-between;">
+                                <span style="color:#fff; font-weight:700; font-size:0.92rem;">
+                                    <i class="fas fa-bell me-2" style="color:#38bdf8;"></i>Thông báo
+                                    <span id="notif-count-label" style="background:rgba(255,255,255,0.2); color:#fff; font-size:0.7rem; padding:2px 8px; border-radius:20px; margin-left:6px; display:none;"></span>
+                                </span>
+                                <button onclick="markAllRead()" id="mark-all-btn" style="display:none; background:rgba(255,255,255,0.15); border:none; color:#93c5fd; font-size:0.75rem; padding:4px 10px; border-radius:8px; cursor:pointer; transition:background 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.25)'" onmouseleave="this.style.background='rgba(255,255,255,0.15)'">
+                                    Đọc tất cả
+                                </button>
+                            </div>
+
+                            {{-- List --}}
+                            <div id="notif-list" style="max-height:380px; overflow-y:auto; padding:8px;">
+                                <div id="notif-loading" style="text-align:center; padding:30px; color:#94a3b8; font-size:0.88rem;">
+                                    <i class="fas fa-spinner fa-spin me-2"></i>Đang tải...
+                                </div>
+                            </div>
+
+                            {{-- Footer --}}
+                            <div style="border-top:1px solid #f1f5f9; padding:10px 14px; text-align:center;">
+                                <a href="{{ route('profile') }}#pills-history" style="font-size:0.82rem; color:#0ea5e9; text-decoration:none; font-weight:600;">
+                                    <i class="fas fa-history me-1"></i>Xem lịch sử đặt tour
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="dropdown me-3">
                         @if($username)
                             <a class="dropdown-toggle user-dropdown-toggle text-dark text-decoration-none" href="#" role="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
@@ -277,6 +321,24 @@
                 </div>
             </div>
         </nav>
+    </div>
+
+    <!-- Toast Container for Notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 10000;">
+        <div id="notif-toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" style="border-radius: 12px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;">
+            <div class="toast-header" style="background: #13357b; color: #fff; border: none;">
+                <i class="fas fa-bell me-2"></i>
+                <strong class="me-auto">Thông báo mới</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" style="background: #fff; padding: 15px;">
+                <div id="toast-title" style="font-weight: 700; color: #0f172a; margin-bottom: 5px; font-size: 0.9rem;"></div>
+                <div id="toast-message" style="font-size: 0.82rem; color: #64748b; line-height: 1.4;"></div>
+                <div class="mt-2 pt-2 border-top">
+                    <a id="toast-link" href="#" class="btn btn-primary btn-sm rounded-pill" style="font-size: 0.75rem; padding: 4px 12px;">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Voice Status Overlay UI -->
@@ -355,3 +417,203 @@
             }
         });
     </script>
+
+@if(session('userId'))
+<script>
+// ===== Notification System =====
+const NOTIF_API  = '{{ route("notifications.index") }}';
+const CSRF_TOKEN = '{{ csrf_token() }}';
+
+let notifLoaded  = false;
+
+function updateBadge(count) {
+    const badge = document.getElementById('notif-badge');
+    const countLbl = document.getElementById('notif-count-label');
+    const markAllBtn = document.getElementById('mark-all-btn');
+    if (!badge) return;
+    if (count > 0) {
+        badge.style.display    = 'flex';
+        badge.textContent      = count > 99 ? '99+' : count;
+        if (countLbl) { countLbl.style.display = 'inline'; countLbl.textContent = count + ' chưa đọc'; }
+        if (markAllBtn) markAllBtn.style.display = 'block';
+        // Shake animation khi có thông báo mới
+        const bell = document.getElementById('notifBell');
+        if (bell) { bell.style.animation = 'notif-shake 0.4s ease'; setTimeout(() => bell.style.animation = '', 400); }
+    } else {
+        badge.style.display = 'none';
+        if (countLbl) countLbl.style.display = 'none';
+        if (markAllBtn) markAllBtn.style.display = 'none';
+    }
+}
+
+function renderNotifications(notifications, unread) {
+    const list = document.getElementById('notif-list');
+    if (!list) return;
+    updateBadge(unread);
+
+    if (!notifications || notifications.length === 0) {
+        list.innerHTML = `
+            <div style="text-align:center; padding:40px 20px; color:#94a3b8;">
+                <i class="fas fa-bell-slash" style="font-size:2.5rem; margin-bottom:12px; display:block; opacity:0.4;"></i>
+                <p style="margin:0; font-size:0.88rem;">Bạn chưa có thông báo nào</p>
+            </div>`;
+        return;
+    }
+
+    list.innerHTML = notifications.map(n => {
+        const isUnread = !n.is_read;
+        return `
+        <div class="notif-item" data-id="${n.notifId}" data-link="${n.link || ''}"
+             onclick="handleNotifClick(this)"
+             style="display:flex; gap:12px; padding:10px 12px; border-radius:12px; cursor:pointer; transition:background 0.15s; ${isUnread ? 'background:#f0f9ff;' : ''}; margin-bottom:2px;"
+             onmouseenter="this.style.background='#f8fafc'"
+             onmouseleave="this.style.background='${isUnread ? '#f0f9ff' : 'transparent'}'">
+            <div style="width:38px; height:38px; border-radius:50%; background:${n.color}20; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+                <i class="${n.icon}" style="color:${n.color}; font-size:0.9rem;"></i>
+            </div>
+            <div style="flex:1; min-width:0;">
+                <div style="font-weight:${isUnread ? '700' : '500'}; font-size:0.82rem; color:#0f172a; margin-bottom:2px; line-height:1.3;">${n.title}</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.4; margin-bottom:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${n.message}</div>
+                <div style="font-size:0.7rem; color:#94a3b8;">${n.time_ago}</div>
+            </div>
+            ${isUnread ? '<div style="width:8px; height:8px; background:#0ea5e9; border-radius:50%; flex-shrink:0; margin-top:6px; box-shadow:0 0 6px rgba(14,165,233,0.5);"></div>' : ''}
+        </div>`;
+    }).join('');
+}
+
+function handleNotifClick(el) {
+    const id   = el.dataset.id;
+    const link = el.dataset.link;
+
+    // Mark as read
+    fetch(`/notifications/${id}/read`, {
+        method: 'POST',
+        headers: { 'X-CSRF-TOKEN': CSRF_TOKEN, 'Content-Type': 'application/json' }
+    }).then(() => {
+        el.style.background = 'transparent';
+        const dot = el.querySelector('div[style*="0ea5e9"]');
+        if (dot) dot.remove();
+        // Cập nhật badge
+        const badge = document.getElementById('notif-badge');
+        if (badge && badge.style.display !== 'none') {
+            let count = parseInt(badge.textContent) - 1;
+            updateBadge(count > 0 ? count : 0);
+        }
+    });
+
+    // Navigate nếu có link
+    if (link) {
+        setTimeout(() => { window.location.href = link; }, 150);
+    }
+}
+
+function markAllRead() {
+    fetch('/notifications/read-all', {
+        method: 'POST',
+        headers: { 'X-CSRF-TOKEN': CSRF_TOKEN, 'Content-Type': 'application/json' }
+    }).then(() => {
+        updateBadge(0);
+        // Xóa dấu chấm xanh và highlight
+        document.querySelectorAll('.notif-item').forEach(el => {
+            el.style.background = 'transparent';
+            const dot = el.querySelector('div[style*="0ea5e9"]');
+            if (dot) dot.remove();
+        });
+        notifLoaded = false; // Force reload next open
+    });
+}
+
+function loadNotifications() {
+    fetch(NOTIF_API, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(r => r.json())
+        .then(data => {
+            notifLoaded = true;
+            renderNotifications(data.notifications, data.unread);
+        })
+        .catch(() => {
+            const list = document.getElementById('notif-list');
+            if (list) list.innerHTML = '<div style="text-align:center;padding:20px;color:#94a3b8;font-size:0.85rem;">Không thể tải thông báo</div>';
+        });
+}
+
+// Load khi mở dropdown
+const notifBell = document.getElementById('notifBell');
+if (notifBell) {
+    notifBell.addEventListener('click', function () {
+        if (!notifLoaded) loadNotifications();
+    });
+}
+
+// Poll: kiểm tra badge mỗi 30s (background, nhẹ)
+let lastPollUnread = -1;
+let highestNotifId = parseInt(localStorage.getItem('highestNotifId') || '0');
+
+function showToast(notif) {
+    const toastEl = document.getElementById('notif-toast');
+    if (!toastEl) return;
+    
+    document.getElementById('toast-title').textContent = notif.title;
+    document.getElementById('toast-message').textContent = notif.message;
+    const link = document.getElementById('toast-link');
+    if (notif.link) {
+        link.style.display = 'inline-block';
+        link.href = notif.link;
+    } else {
+        link.style.display = 'none';
+    }
+    
+    const toast = new bootstrap.Toast(toastEl, { delay: 10000 });
+    toast.show();
+}
+
+function pollBadge() {
+    fetch(NOTIF_API, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(r => r.json())
+        .then(d => { 
+            const currentUnread = d.unread;
+            
+            // Nếu có thông báo mới (unread count tăng lên)
+            if (lastPollUnread !== -1 && currentUnread > lastPollUnread) {
+                // Lấy thông báo mới nhất để hiện toast
+                if (d.notifications && d.notifications.length > 0) {
+                    const latest = d.notifications[0];
+                    if (latest.notifId > highestNotifId) {
+                        showToast(latest);
+                        highestNotifId = latest.notifId;
+                        localStorage.setItem('highestNotifId', highestNotifId);
+                    }
+                }
+            }
+            
+            // Cập nhật mốc ID cao nhất nếu lần đầu load
+            if (highestNotifId === 0 && d.notifications && d.notifications.length > 0) {
+                highestNotifId = d.notifications[0].notifId;
+                localStorage.setItem('highestNotifId', highestNotifId);
+            }
+
+            updateBadge(currentUnread); 
+            lastPollUnread = currentUnread;
+            notifLoaded = false; // invalidate cache
+        })
+        .catch(() => {});
+}
+// Lần đầu load badge ngay
+pollBadge();
+// Sau đó mỗi 30 giây
+setInterval(pollBadge, 30000);
+</script>
+
+<style>
+@keyframes notif-shake {
+    0%, 100% { transform: rotate(0); }
+    20%       { transform: rotate(-12deg); }
+    40%       { transform: rotate(12deg); }
+    60%       { transform: rotate(-8deg); }
+    80%       { transform: rotate(8deg); }
+}
+/* Custom scrollbar cho danh sách thông báo */
+#notif-list::-webkit-scrollbar { width: 4px; }
+#notif-list::-webkit-scrollbar-track { background: #f8fafc; }
+#notif-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+</style>
+@endif

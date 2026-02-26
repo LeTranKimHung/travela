@@ -36,50 +36,90 @@ class LoginController extends Controller
 
     public function register(Request $request)
     {
-        // Validation cơ bản
+        // Validation đầy đủ với thông báo tiếng Việt
         $request->validate([
-            'username_regis' => 'required|min:3',
-            'email' => 'required|email',
-            'password_regis' => 'required|min:6',
-            're_pass' => 'required|same:password_regis'
+            'username_regis' => [
+                'required',
+                'min:3',
+                'max:30',
+                'alpha_num',
+                'unique:tbl_user,userName',
+            ],
+            'fullName' => [
+                'required',
+                'min:2',
+                'max:100',
+                'regex:/^[\p{L}\s]+$/u',
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                'unique:tbl_user,email',
+            ],
+            'password_regis' => [
+                'required',
+                'min:8',
+                'max:64',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            ],
+            're_pass' => [
+                'required',
+                'same:password_regis',
+            ],
+            'agree' => ['accepted'],
+        ], [
+            'username_regis.required'   => 'Vui lòng nhập tên đăng nhập.',
+            'username_regis.min'        => 'Tên đăng nhập tối thiểu 3 ký tự.',
+            'username_regis.max'        => 'Tên đăng nhập tối đa 30 ký tự.',
+            'username_regis.alpha_num'  => 'Tên đăng nhập chỉ được chứa chữ cái và số (không có dấu, khoảng trắng).',
+            'username_regis.unique'     => 'Tên đăng nhập này đã được sử dụng.',
+            'fullName.required'         => 'Vui lòng nhập họ và tên.',
+            'fullName.min'              => 'Họ và tên tối thiểu 2 ký tự.',
+            'fullName.regex'            => 'Họ và tên chỉ được chứa chữ cái và khoảng trắng.',
+            'email.required'            => 'Vui lòng nhập email.',
+            'email.email'               => 'Email không đúng định dạng.',
+            'email.unique'              => 'Email này đã được đăng ký.',
+            'password_regis.required'   => 'Vui lòng nhập mật khẩu.',
+            'password_regis.min'        => 'Mật khẩu tối thiểu 8 ký tự.',
+            'password_regis.max'        => 'Mật khẩu tối đa 64 ký tự.',
+            'password_regis.regex'      => 'Mật khẩu phải có ít nhất 1 chữ hoa, 1 chữ thường và 1 số.',
+            're_pass.required'          => 'Vui lòng xác nhận mật khẩu.',
+            're_pass.same'              => 'Xác nhận mật khẩu không khớp.',
+            'agree.accepted'            => 'Bạn phải đồng ý với điều khoản sử dụng.',
         ]);
 
         $username_regis = $request->username_regis;
-        $email = $request->email;
+        $email          = $request->email;
+        $fullName       = $request->fullName;
         $password_regis = $request->password_regis;
-
-        $checkAccountExist = $this->login->checkUserExist($username_regis, $email);
-        if ($checkAccountExist) {
-            if ($request->ajax()) {
-                return response()->json(['success' => false, 'message' => 'Tên người dùng hoặc email đã tồn tại!']);
-            }
-            return back()->with('error', 'Tên người dùng hoặc email đã tồn tại!')->withInput();
-        }
 
         $activation_token = Str::random(60);
         $dataInsert = [
             'userName'         => $username_regis,
+            'fullName'         => $fullName,
             'email'            => $email,
             'passWord'         => Hash::make($password_regis),
             'activation_token' => $activation_token,
-            'isActive'         => 'n'
+            'isActive'         => 'n',
         ];
 
         $this->login->registerAcount($dataInsert);
-        
+
         try {
             $this->sendActivationEmail($email, $activation_token);
         } catch (\Exception $e) {
-            // Log lỗi nếu không gửi được mail nhưng vẫn cho qua hoặc báo lỗi tùy project
+            \Illuminate\Support\Facades\Log::error('Gửi email kích hoạt thất bại: ' . $e->getMessage());
         }
 
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Đăng ký thành công! Vui lòng kiểm tra email để kích hoạt tài khoản.'
+                'message' => 'Đăng ký thành công! Vui lòng kiểm tra email để kích hoạt tài khoản.',
             ]);
         }
-        return redirect()->route('login')->with('message', 'Đăng ký thành công! Vui lòng kiểm tra email để kích hoạt.');
+        return redirect()->route('login')
+            ->with('message', 'Đăng ký thành công! Vui lòng kiểm tra email để kích hoạt tài khoản.');
     }
 
     public function sendActivationEmail($email, $token)

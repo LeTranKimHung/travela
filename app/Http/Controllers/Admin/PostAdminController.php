@@ -2,11 +2,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class PostAdminController extends Controller {
+    protected NotificationService $notif;
+
+    public function __construct(NotificationService $notif)
+    {
+        $this->notif = $notif;
+    }
     public function index() {
         $posts = DB::table('tbl_posts')->orderBy('created_at', 'desc')->get();
         return view('admin.posts.index', compact('posts'));
@@ -21,6 +28,7 @@ class PostAdminController extends Controller {
             'title' => 'required',
             'summary' => 'required',
             'content' => 'required',
+            'author' => 'nullable|string|max:100',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -31,15 +39,28 @@ class PostAdminController extends Controller {
             $image->move(public_path('clients/img/blog'), $imageName);
         }
 
-        DB::table('tbl_posts')->insert([
+        // Sử dụng insertGetId để lấy ID vừa tạo một cách an toàn
+        $postId = DB::table('tbl_posts')->insertGetId([
             'title' => $request->title,
             'summary' => $request->summary,
             'content' => $request->content,
             'image' => $imageName,
-            'author' => session('username') ?? 'Admin',
+            'author' => $request->author ?? session('username') ?? 'Admin',
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        // Bọc phần thông báo trong try-catch để tránh crash nếu có lỗi notification
+        try {
+            $this->notif->broadcast(
+                'new_post',
+                'Tin tức mới từ Travela',
+                '"' . $request->title . '" — Xem ngay bài viết mới nhất trên Blog!',
+                $postId ? route('blog-detail', ['id' => $postId]) : route('blog')
+            );
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Notification Error: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.posts.index')->with('success', 'Thêm bài viết mới thành công');
     }
@@ -54,6 +75,7 @@ class PostAdminController extends Controller {
             'title' => 'required',
             'summary' => 'required',
             'content' => 'required',
+            'author' => 'nullable|string|max:100',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -77,6 +99,7 @@ class PostAdminController extends Controller {
             'title' => $request->title,
             'summary' => $request->summary,
             'content' => $request->content,
+            'author' => $request->author ?? session('username') ?? 'Admin',
             'image' => $imageName,
             'updated_at' => now()
         ]);

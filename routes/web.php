@@ -15,6 +15,7 @@ use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\UserController;
 use App\Http\Controllers\clients\PaymentController;
 use App\Http\Controllers\clients\ChatController;
+use App\Http\Controllers\clients\NotificationController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\TourAdminController;
 use App\Http\Controllers\Admin\BookingAdminController;
@@ -73,6 +74,11 @@ Route::middleware(['checkLoginClient'])->group(function () {
     // Reviews
     Route::post('/reviews/check-booking', [TourDetailController::class, 'checkBooking'])->name('reviews.check-booking');
     Route::post('/reviews/submit', [TourDetailController::class, 'submitReview'])->name('reviews.submit');
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
 });
 
 // ===== PAYMENT ROUTES =====

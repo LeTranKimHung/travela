@@ -1,93 +1,87 @@
 @include('clients.blocks.header')
-
-@php
-    $bannerImg = isset($tours) && $tours->isNotEmpty() ? $tours->first()->images[0] : 'default.jpg';
-@endphp
-
 <link rel="stylesheet" href="{{ asset('clients/css/style.css') }}">
 
-<div style="background: url('{{ asset('clients/img/galery-tour/' . $bannerImg) }}') center center/cover no-repeat; padding: 150px 0 28px 0; position: relative;">
-    <div style="background:rgba(155, 155, 158, 0.7); position:absolute; inset:0;"></div>
+@php $bannerImg = $post->image ?? null; @endphp
+
+{{-- Hero Banner --}}
+<div style="background: url('{{ $bannerImg ? asset('clients/img/blog/'.$bannerImg) : asset('clients/img/blog-1.jpg') }}') center center/cover no-repeat; padding:130px 0 50px; position:relative;">
+    <div style="background:linear-gradient(180deg,rgba(15,23,42,0.75) 0%,rgba(15,23,42,0.55) 100%); position:absolute; inset:0;"></div>
     <div class="container" style="position:relative; z-index:2;">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb" style="background:transparent; margin-bottom:0;">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('home') }}" style="color:#fff; text-decoration:underline;">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ route('blog') }}" style="color:#fff; text-decoration:underline;">
-                        Blog
-                    </a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page" style="color:#fff;">
-                    Chi tiết bài viết
-                </li>
+            <ol class="breadcrumb mb-2" style="background:transparent;">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}" style="color:#93c5fd; text-decoration:none;"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('blog') }}" style="color:#93c5fd; text-decoration:none;">Blog</a></li>
+                <li class="breadcrumb-item active" style="color:#fff;">Chi tiết bài viết</li>
             </ol>
         </nav>
+        <h1 style="color:#fff; font-weight:700; font-size:1.9rem; margin-bottom:8px; max-width:800px; line-height:1.3;">
+            {{ $post->title }}
+        </h1>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;">
+            <span style="color:rgba(255,255,255,0.8); font-size:0.85rem;"><i class="fas fa-user me-1" style="color:#38bdf8;"></i>{{ $post->author }}</span>
+            <span style="color:rgba(255,255,255,0.8); font-size:0.85rem;"><i class="fas fa-calendar-alt me-1" style="color:#38bdf8;"></i>{{ date('d/m/Y', strtotime($post->created_at)) }}</span>
+        </div>
     </div>
 </div>
 
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <div class="row g-5">
+{{-- Main Content --}}
+<div style="background:#f8fafc;" class="py-5">
+    <div class="container py-4">
+        <div class="row g-4">
+            {{-- Article --}}
             <div class="col-lg-8">
-                <!-- Post Content -->
-                <div class="blog-detail-content">
-                    @if($post->image)
-                        <img src="{{ asset('clients/img/blog/' . $post->image) }}" class="img-fluid w-100 rounded mb-4" alt="{{ $post->title }}">
-                    @endif
-                    
-                    <div class="d-flex align-items-center mb-3">
-                        <small class="text-muted me-3"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ date('d/m/Y', strtotime($post->created_at)) }}</small>
-                        <small class="text-muted"><i class="fa fa-user text-primary me-2"></i>Đăng bởi: {{ $post->author }}</small>
+                <div style="background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+                    {{-- Summary --}}
+                    <div style="background:linear-gradient(135deg,#0ea5e910,#38bdf810); border-left:4px solid #0ea5e9; padding:20px 28px; margin:0;">
+                        <p style="margin:0; font-size:1rem; color:#334155; font-weight:500; line-height:1.7; font-style:italic;">{{ $post->summary }}</p>
                     </div>
-                    
-                    <h1 class="mb-4">{{ $post->title }}</h1>
-                    
-                    <div class="summary-box p-3 bg-light rounded mb-4 border-start border-primary border-4">
-                        <p class="mb-0 fw-bold italic">{{ $post->summary }}</p>
-                    </div>
-                    
-                    <div class="content body-text" style="line-height: 1.8; font-size: 1.1rem; color: #444;">
+                    {{-- Content --}}
+                    <div style="padding:32px 28px; font-size:1rem; color:#374151; line-height:1.9;">
                         {!! nl2br(e($post->content)) !!}
                     </div>
-                    
-                    <div class="mt-5 pt-4 border-top">
-                        <a href="{{ route('blog') }}" class="btn btn-primary rounded-pill py-2 px-4">
-                            <i class="fas fa-arrow-left me-2"></i> Quay lại danh sách Blog
+                    {{-- Footer --}}
+                    <div style="padding:20px 28px; border-top:1px solid #f1f5f9; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                        <a href="{{ route('blog') }}" style="display:inline-flex; align-items:center; gap:8px; background:#f1f5f9; color:#334155; padding:10px 20px; border-radius:10px; font-size:0.88rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='#e2e8f0'" onmouseleave="this.style.background='#f1f5f9'">
+                            <i class="fas fa-arrow-left"></i> Quay lại Blog
                         </a>
+                        <div style="font-size:0.82rem; color:#94a3b8;">
+                            <i class="fas fa-calendar-alt me-1"></i>Đăng ngày {{ date('d/m/Y', strtotime($post->created_at)) }}
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
+            {{-- Sidebar --}}
             <div class="col-lg-4">
-                <!-- Sidebar -->
-                <div class="sidebar bg-light p-4 rounded shadow-sm">
-                    <h4 class="mb-4">Bài viết khác</h4>
-                    @foreach($relatedPosts as $related)
-                    <div class="related-post-item mb-4 d-flex align-items-center gap-3">
-                        <div style="flex-shrink: 0;">
+                <div style="position:sticky; top:80px;">
+                    {{-- Related Posts --}}
+                    <div style="background:#fff; border-radius:16px; padding:24px; box-shadow:0 2px 12px rgba(0,0,0,0.07); margin-bottom:20px;">
+                        <h6 style="font-weight:700; color:#0f172a; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+                            <i class="fas fa-list me-2" style="color:#0ea5e9;"></i>Bài viết khác
+                        </h6>
+                        @forelse($relatedPosts as $related)
+                        <a href="{{ route('blog-detail', $related->postId) }}" style="display:flex; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid #f8fafc; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='#f8fafc'" onmouseleave="this.style.background=''">
                             @if($related->image)
-                                <img src="{{ asset('clients/img/blog/' . $related->image) }}" class="rounded" style="width: 80px; height: 60px; object-fit: cover;">
+                                <img src="{{ asset('clients/img/blog/'.$related->image) }}" style="width:70px; height:52px; object-fit:cover; border-radius:8px; flex-shrink:0;">
                             @else
-                                <div class="bg-secondary rounded" style="width: 80px; height: 60px;"></div>
+                                <div style="width:70px; height:52px; background:#e2e8f0; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center;"><i class="fas fa-image" style="color:#94a3b8;"></i></div>
                             @endif
-                        </div>
-                        <div>
-                            <h6 class="mb-1"><a href="{{ route('blog-detail', $related->postId) }}" class="text-dark text-decoration-none">{{ $related->title }}</a></h6>
-                            <small class="text-muted">{{ date('d/m/Y', strtotime($related->created_at)) }}</small>
-                        </div>
+                            <div>
+                                <div style="font-size:0.85rem; font-weight:600; color:#0f172a; line-height:1.3; margin-bottom:4px;">{{ Str::limit($related->title, 50) }}</div>
+                                <div style="font-size:0.75rem; color:#94a3b8;"><i class="fas fa-calendar-alt me-1"></i>{{ date('d/m/Y', strtotime($related->created_at)) }}</div>
+                            </div>
+                        </a>
+                        @empty
+                        <p style="color:#94a3b8; font-size:0.85rem; margin:0;">Chưa có bài viết liên quan.</p>
+                        @endforelse
                     </div>
-                    @endforeach
-                    
-                    <hr>
-                    
-                    <h4 class="mb-4 mt-4">Tìm kiếm</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Nhập từ khóa...">
-                        <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+                    {{-- CTA --}}
+                    <div style="background:linear-gradient(135deg,#0f172a,#1e3a5f); border-radius:16px; padding:24px; text-align:center;">
+                        <i class="fas fa-map-marked-alt" style="font-size:2rem; color:#38bdf8; margin-bottom:12px; display:block;"></i>
+                        <h6 style="color:#fff; font-weight:700; margin-bottom:8px;">Sẵn sàng phiêu lưu?</h6>
+                        <p style="color:rgba(255,255,255,0.7); font-size:0.82rem; margin-bottom:16px;">Khám phá các tour du lịch tuyệt vời từ Travela</p>
+                        <a href="{{ route('packages') }}" style="display:inline-block; background:linear-gradient(135deg,#0ea5e9,#38bdf8); color:#fff; padding:10px 22px; border-radius:10px; font-size:0.88rem; font-weight:600; text-decoration:none;">Xem Tour ngay</a>
                     </div>
                 </div>
             </div>
@@ -96,15 +90,3 @@
 </div>
 
 @include('clients.blocks.footer')
-
-<style>
-    .text-truncate-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    .body-text {
-        white-space: pre-wrap;
-    }
-</style>

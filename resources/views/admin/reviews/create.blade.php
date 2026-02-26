@@ -1,102 +1,77 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm Đánh giá mới - Travel Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { background-color: #f8f9fa; }
-        .sidebar { min-height: 100vh; background: #0f172a; color: white; }
-        .sidebar .nav-link { color: rgba(255, 255, 255, 0.7); padding: 12px 20px; margin: 5px 15px; border-radius: 10px; }
-        .sidebar .nav-link:hover, .sidebar .nav-link.active { background-color: #1e293b; color: #38bdf8; }
-        .card { border: none; border-radius: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-    </style>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 col-lg-2 sidebar p-0">
-                <div class="p-4">
-                    <h4><i class="fas fa-plane-departure"></i> Travel Admin</h4>
-                </div>
-                <nav class="nav flex-column px-3">
-                    <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-                    <a class="nav-link" href="{{ route('admin.tours.index') }}"><i class="fas fa-map-marked-alt me-2"></i> Quản lý Tour</a>
-                    <a class="nav-link" href="{{ route('admin.bookings.index') }}"><i class="fas fa-calendar-check me-2"></i> Đơn hàng</a>
-                    <a class="nav-link" href="{{ route('admin.posts.index') }}"><i class="fas fa-newspaper me-2"></i> Quản lý Bài viết</a>
-                    <a class="nav-link" href="{{ route('admin.galleries.index') }}"><i class="fas fa-images me-2"></i> Quản lý Gallery</a>
-                    <a class="nav-link active" href="{{ route('admin.reviews.index') }}"><i class="fas fa-star me-2"></i> Quản lý Review</a>
-                </nav>
-            </div>
-            <div class="col-md-9 col-lg-10 p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Thêm đánh giá khách hàng</h2>
-                    <a href="{{ route('admin.reviews.index') }}" class="btn btn-secondary text-white"><i class="fas fa-arrow-left"></i> Quay lại</a>
-                </div>
+@extends('admin.layouts.app')
+@section('title', 'Thêm đánh giá mới')
+@section('page-title', 'Thêm đánh giá mới')
 
-                <div class="card shadow-sm">
-                    <div class="card-body p-4">
-                        <form action="{{ route('admin.reviews.store') }}" method="POST">
-                            @csrf
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Tên khách hàng <span class="text-danger">*</span></label>
-                                        <input type="text" name="name" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Địa chỉ/Vị trí</label>
-                                        <input type="text" name="location" class="form-control" placeholder="Ví dụ: TP. Hồ Chí Minh">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Đánh giá (1-5 sao)</label>
-                                        <select name="rating" class="form-select">
-                                            <option value="5">⭐⭐⭐⭐⭐ 5 Sao</option>
-                                            <option value="4">⭐⭐⭐⭐ 4 Sao</option>
-                                            <option value="3">⭐⭐⭐ 3 Sao</option>
-                                            <option value="2">⭐⭐ 2 Sao</option>
-                                            <option value="1">⭐ 1 Sao</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Trạng thái</label>
-                                        <div class="form-check form-switch mt-2">
-                                            <input class="form-check-input" type="checkbox" name="status" value="1" checked id="statusSwitch">
-                                            <label class="form-check-label" for="statusSwitch">Hiển thị trên trang chủ</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Nội dung đánh giá <span class="text-danger">*</span></label>
-                                        <textarea name="content" id="contentEditor" class="form-control" rows="4" placeholder="Nhập cảm nhận của khách hàng..." required></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary px-5 py-2"><i class="fas fa-save me-2"></i> Lưu đánh giá</button>
-                                </div>
-                            </div>
-                        </form>
+@section('head')
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+@endsection
+
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Thêm đánh giá khách hàng</h4>
+    <a href="{{ route('admin.reviews.index') }}" class="btn btn-outline-secondary btn-sm">
+        <i class="fas fa-arrow-left me-1"></i> Quay lại
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body p-4">
+        <form action="{{ route('admin.reviews.store') }}" method="POST">
+            @csrf
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Tên khách hàng <span class="text-danger">*</span></label>
+                    <input type="text" name="name" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Địa chỉ/Vị trí</label>
+                    <input type="text" name="location" class="form-control" placeholder="Ví dụ: TP. Hồ Chí Minh">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Đánh giá (1-5 sao)</label>
+                    <select name="rating" class="form-select">
+                        <option value="5">⭐⭐⭐⭐⭐ 5 Sao</option>
+                        <option value="4">⭐⭐⭐⭐ 4 Sao</option>
+                        <option value="3">⭐⭐⭐ 3 Sao</option>
+                        <option value="2">⭐⭐ 2 Sao</option>
+                        <option value="1">⭐ 1 Sao</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Trạng thái</label>
+                    <div class="form-check form-switch mt-2">
+                        <input class="form-check-input" type="checkbox" name="status" value="1" checked id="statusSwitch">
+                        <label class="form-check-label" for="statusSwitch">Hiển thị trên trang chủ</label>
                     </div>
                 </div>
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Nội dung đánh giá <span class="text-danger">*</span></label>
+                    <textarea name="content" id="contentEditor" class="form-control" rows="4" placeholder="Nhập cảm nhận của khách hàng..."></textarea>
+                </div>
+                <div class="col-12 text-end border-top pt-3">
+                    <a href="{{ route('admin.reviews.index') }}" class="btn btn-secondary me-2">Hủy</a>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="fas fa-save me-1"></i> Lưu đánh giá
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor.create(document.querySelector('#contentEditor'), {
-            toolbar: ['bold', 'italic', 'underline', '|', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
-            placeholder: 'Nhập cảm nhận của khách hàng...'
-        }).catch(err => console.error(err));
-    </script>
-    <style>.ck-editor__editable { min-height: 150px; }</style>
-</body>
-</html>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    let editor;
+    ClassicEditor.create(document.querySelector('#contentEditor'), {
+        toolbar: ['bold','italic','|','bulletedList','numberedList','|','undo','redo'],
+    }).then(newEditor => {
+        editor = newEditor;
+    }).catch(err => console.error(err));
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+        if (editor) document.querySelector('#contentEditor').value = editor.getData();
+    });
+</script>
+<style>.ck-editor__editable { min-height: 150px; }</style>
+@endsection
