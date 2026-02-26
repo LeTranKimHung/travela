@@ -1,464 +1,198 @@
-# 🌏 Travel Management System
+# 🌏 Hệ thống Quản lý Du lịch Travela
 
 <div align="center">
 
-![Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Gemini AI](https://img.shields.io/badge/Gemini%20AI-Integration-blue?style=for-the-badge&logo=google-gemini&logoColor=white)
 
-A comprehensive travel tour booking management system built on Laravel Framework
+Một hệ thống quản lý đặt tour du lịch toàn diện được xây dựng trên nền tảng Laravel Framework, tích hợp trí tuệ nhân tạo (AI).
 
-[Features](#-features) •
-[Installation](#-installation) •
-[Usage](#-usage) •
-[Contributing](#-contributing)
+[Tính năng](#-tính-năng) •
+[Cài đặt](#-hướng-dẫn-cài-đặt) •
+[Sử dụng](#-hướng-dẫn-sử-dụng) •
+[Công nghệ](#-công-nghệ-sử-dụng)
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## 📋 Mục lục
 
-- [Introduction](#-introduction)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [System Requirements](#-system-requirements)
-- [Installation](#-installation)
-- [Project Structure](#-project-structure)
-- [Usage](#-usage)
-- [API Documentation](#-api-documentation)
-- [Screenshots](#-screenshots)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
+- [Giới thiệu](#-giới-thiệu)
+- [Tính năng nổi bật](#-tính-năng-nổi-bật)
+- [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
+- [Yêu cầu hệ thống](#-yêu-cầu-hệ-thống)
+- [Hướng dẫn cài đặt](#-hướng-dẫn-cài-đặt)
+- [Cấu trúc dự án](#-cấu-trúc-dự-án)
+- [Liên hệ](#-liên-hệ)
 
 ---
 
-## 🎯 Introduction
+## 🎯 Giới thiệu
 
-**Travel Management System** is a modern web application for managing travel tours, developed using Laravel Framework. The system provides complete features for both customers and administrators, from searching and booking tours to managing orders and revenue statistics.
+**Travela** là một ứng dụng web hiện đại giúp quản lý các tour du lịch, được phát triển bằng Laravel. Hệ thống cung cấp đầy đủ các tính năng cho cả khách hàng và quản trị viên, giúp tối ưu hóa quy trình đặt tour và quản lý kinh doanh công ty du lịch.
 
-### 🎨 Key Highlights
-
-- ✅ User-friendly, responsive interface on all devices
-- ✅ Clear and secure role-based access control
-- ✅ Online payment integration
-- ✅ Intuitive dashboard statistics
-- ✅ Smart tour search and filtering
+Đặc biệt, hệ thống đã được tích hợp **Gemini AI** để hỗ trợ khách hàng trả lời các thắc mắc về tour một cách thông minh và tự động.
 
 ---
 
-## 🚀 Features
+## 🚀 Tính năng nổi bật
 
-### 👨‍💼 Admin Panel
+### 🤖 Tích hợp Trí tuệ Nhân tạo (Gemini AI)
+- **Chatbot thông minh**: Tự động trả lời câu hỏi của khách hàng dựa trên dữ liệu tour có sẵn.
+- **Tư vấn 24/7**: Hỗ trợ khách hàng ngay lập tức mà không cần nhân viên trực tuyến.
+- **Ngữ cảnh hóa**: AI hiểu được dữ liệu tour hiện tại để đưa ra gợi ý chính xác nhất.
 
-<table>
-<tr>
-<td width="50%">
+### 👨‍💼 Quản trị viên (Admin Panel)
+- **Dashboard Thống kê**: Tổng quan doanh thu, số lượng đơn hàng theo biểu đồ trực quan.
+- **Quản lý Tour**: Thêm/Sửa/Xóa tour, quản lý lịch trình chi tiết và giá cả.
+- **Quản lý Đơn hàng**: Theo dõi trạng thái đặt tour, phê duyệt đơn hàng.
+- **Hệ thống Email**: Tự động gửi email xác nhận cho khách khi đơn hàng được phê duyệt.
+- **Quản lý Blog**: Đăng bài tin tức du lịch, hỗ trợ tùy chỉnh tên tác giả cho từng bài viết.
+- **Phân quyền**: Quản lý người dùng và quyền truy cập hệ thống.
 
-#### 📊 Dashboard
-- Overview statistics of tours
-- Revenue reports by time period
-- Order quantity charts
-- Recent orders list
-
-</td>
-<td width="50%">
-
-#### 🗺️ Tour Management
-- Add/Edit/Delete tours
-- Upload tour images
-- Manage pricing and promotions
-- Update detailed itineraries
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-#### 📦 Order Management
-- Track booking status
-- Confirm/Cancel orders
-- Update payment status
-- Export order reports
-
-</td>
-<td width="50%">
-
-#### 🔐 Access Control
-- Security middleware
-- User role management
-- Admin access control
-- System activity logs
-
-</td>
-</tr>
-</table>
-
-### 👥 Customer Portal
-
-<table>
-<tr>
-<td width="50%">
-
-#### 🔍 Search & Browse Tours
-- Rich tour listings
-- Search by destination
-- Filter by price and time
-- View tour details and reviews
-
-</td>
-<td width="50%">
-
-#### 🎫 Book Tours
-- Simple booking process
-- Secure online payment
-- Email booking confirmation
-- Track order status
-
-</td>
-</tr>
-<tr>
-<td colspan="2">
-
-#### 👤 Personal Account
-- Easy registration/login
-- Manage personal information
-- Booking history
-- Password change and settings
-
-</td>
-</tr>
-</table>
+### 👥 Khách hàng (User Portal)
+- **Tìm kiếm thông minh**: Tìm tour theo điểm đến, thời gian và giá cả.
+- **Đặt tour trực tuyến**: Quy trình đặt tour đơn giản, nhanh chóng.
+- **Quản lý tài khoản**: Theo dõi lịch sử đặt tour, cập nhật thông tin cá nhân.
+- **Tương tác**: Chat trực tiếp với trợ lý AI để nhận tư vấn.
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Công nghệ sử dụng
 
 ### Backend
 ```
-🔹 Laravel 10.x / 11.x    - PHP Framework
-🔹 MySQL 8.0              - Database Management
-🔹 Eloquent ORM           - Database Interaction
-🔹 Laravel Auth           - Authentication System
+🔹 Laravel 12.x         - PHP Framework mạnh mẽ nhất hiện nay
+🔹 MySQL 8.0              - Hệ quản trị cơ sở dữ liệu
+🔹 Google Gemini API      - Trí tuệ nhân tạo thế hệ mới
+🔹 Mailtrap/SMTP          - Hệ thống gửi email tự động
 ```
 
 ### Frontend
 ```
-🔹 Blade Template         - Template Engine
-🔹 Bootstrap 5.3          - CSS Framework
-🔹 FontAwesome 6          - Icon Library
-🔹 JavaScript (ES6+)      - Interactive Features
-🔹 jQuery                 - DOM Manipulation
-```
-
-### Tools & Libraries
-```
-🔹 Composer               - PHP Dependency Manager
-🔹 NPM                    - Node Package Manager
-🔹 Git                    - Version Control
-🔹 PHPUnit                - Testing Framework
+🔹 Blade Template         - PHP Template Engine
+🔹 Bootstrap 5.3          - Framework CSS hỗ trợ Responsive
+🔹 JavaScript (ES6+)      - Xử lý các tính năng tương tác
+🔹 FontAwesome 6          - Thư viện icon đa dạng
 ```
 
 ---
 
-## 💻 System Requirements
+## 💻 Yêu cầu hệ thống
 
-Ensure your machine meets the following requirements:
-
-| Requirement | Version |
+| Yêu cầu | Phiên bản |
 |------------|---------|
-| PHP | ≥ 8.1 |
+| PHP | ≥ 8.2 |
 | Composer | ≥ 2.5 |
 | MySQL | ≥ 8.0 |
 | Node.js | ≥ 18.x |
-| NPM | ≥ 9.x |
-
-### Required PHP Extensions
-```
-✓ BCMath
-✓ Ctype
-✓ Fileinfo
-✓ JSON
-✓ Mbstring
-✓ OpenSSL
-✓ PDO
-✓ Tokenizer
-✓ XML
-```
 
 ---
 
-## 📦 Installation
+## 📦 Hướng dẫn cài đặt
 
-### Step 1: Clone Repository
+### Bước 1: Clone dự án
 
 ```bash
-git clone https://github.com/LeTranKimHung/travel-management-system.git
-cd travel-management-system
+git clone https://github.com/LeTranKimHung/travela.git
+cd travela
 ```
 
-### Step 2: Install Dependencies
+### Bước 2: Cài đặt thư viện
 
 ```bash
-# Install PHP dependencies
+# Cài đặt PHP dependencies
 composer install
 
-# Install Node dependencies
+# Cài đặt Node dependencies
 npm install
 ```
 
-### Step 3: Environment Configuration
+### Bước 3: Cấu hình môi trường
 
 ```bash
-# Copy environment file
+# Tạo file .env từ file mẫu
 cp .env.example .env
 
-# Generate application key
+# Tạo application key
 php artisan key:generate
 ```
 
-### Step 4: Database Configuration
+### Bước 4: Cấu hình Database & API
 
-Open `.env` file and update database information:
+Mở file `.env` và cập nhật thông tin cơ sở dữ liệu cùng với API Key của Gemini:
 
 ```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
 DB_DATABASE=travel
 DB_USERNAME=root
 DB_PASSWORD=your_password
+
+# Cấu hình Gemini AI
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Cấu hình Mail (để gửi thông báo đặt tour)
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
 ```
 
-### Step 5: Run Migration & Seeder
+### Bước 5: Chạy Migration
 
 ```bash
-# Create database schema
 php artisan migrate
-
-# Seed sample data (optional)
-php artisan db:seed
 ```
 
-### Step 6: Build Assets
+### Bước 6: Khởi chạy ứng dụng
 
 ```bash
-# Development
-npm run dev
-
-# Production
-npm run build
-```
-
-### Step 7: Start Server
-
-```bash
+# Chạy Laravel server
 php artisan serve
+
+# Build assets (Vite)
+npm run dev
 ```
 
-🎉 Access the application at: **http://127.0.0.1:8000**
+🎉 Truy cập ứng dụng tại: **http://127.0.0.1:8000**
 
-## 📂 Project Structure
+---
+
+## 📂 Cấu trúc dự án
 
 ```
-travel-management-system/
+travela/
 ├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── Admin/          # Admin controllers
-│   │   │   │   ├── DashboardController.php
-│   │   │   │   ├── TourController.php
-│   │   │   │   └── BookingController.php
-│   │   │   ├── AuthController.php
-│   │   │   ├── HomeController.php
-│   │   │   └── TourController.php
-│   │   ├── Middleware/
-│   │   │   └── AdminMiddleware.php  # Admin authorization
-│   │   └── Requests/
-│   ├── Models/
-│   │   ├── User.php            # User model (tbl_user)
-│   │   ├── Tour.php
-│   │   ├── Booking.php
-│   │   └── Payment.php
-│   └── Services/               # Business logic
-├── config/
-│   ├── database.php
-│   └── auth.php
-├── database/
-│   ├── migrations/
-│   └── seeders/
-├── public/
-│   ├── css/
-│   ├── js/
-│   └── images/
+│   ├── Http/Controllers/
+│   │   ├── Admin/          # Quản lý phía Admin
+│   │   └── Clients/         # Xử lý phía khách hàng (có ChatController AI)
+│   ├── Mail/               # Các lớp xử lý gửi Email
+│   └── Models/             # Các Model Database
+├── database/               # Migration và Seeders
 ├── resources/
-│   ├── views/
-│   │   ├── admin/              # Admin views
-│   │   ├── layouts/            # Layout templates
-│   │   ├── tours/              # Tour views
-│   │   └── auth/               # Authentication views
-│   └── js/
+│   ├── views/              # Giao diện Blade (Admin & Client)
+│   └── lang/               # Đa ngôn ngữ (nếu có)
 ├── routes/
-│   ├── web.php                 # Web routes
-│   └── api.php                 # API routes
-├── storage/
-├── tests/
-├── .env.example
-├── composer.json
-├── package.json
-└── README.md
+│   └── web.php             # Khai báo các route của ứng dụng
+└── .env                    # Lưu trữ cấu hình nhạy cảm
 ```
 
 ---
 
-## 📖 Usage
+## 📞 Liên hệ
 
-### Start Development Server
-
-```bash
-# Start Laravel server
-php artisan serve
-
-# Start Vite dev server (in another terminal)
-npm run dev
-```
-
-### Run Tests
-
-```bash
-# Run all tests
-php artisan test
-
-# Run specific test
-php artisan test --filter=TourTest
-```
-
-### Clear Cache
-
-```bash
-php artisan cache:clear
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
-```
-
-### Database Commands
-
-```bash
-# Refresh database
-php artisan migrate:fresh
-
-# Seed data
-php artisan db:seed
-
-# Rollback migration
-php artisan migrate:rollback
-```
-
----
-
-## 🔌 API Documentation
-
-### Authentication Endpoints
-
-```http
-POST   /api/register          # Register account
-POST   /api/login             # Login
-POST   /api/logout            # Logout
-```
-
-### Tour Endpoints
-
-```http
-GET    /api/tours             # Get tour list
-GET    /api/tours/{id}        # Get tour details
-POST   /api/tours             # Create new tour (Admin)
-PUT    /api/tours/{id}        # Update tour (Admin)
-DELETE /api/tours/{id}        # Delete tour (Admin)
-```
-
-### Booking Endpoints
-
-```http
-POST   /api/bookings          # Book tour
-GET    /api/bookings          # Get booking list
-GET    /api/bookings/{id}     # Get booking details
-PUT    /api/bookings/{id}     # Update status (Admin)
-```
-
----
-
-## 📸 Screenshots
-
-### 🏠 Homepage
-![Homepage](docs/images/homepage.png)
-
-### 🗺️ Tour Details
-![Tour Detail](docs/images/tour-detail.png)
-
-### 🎫 Book Tour
-![Booking](docs/images/booking.png)
-
----
-
-## 🤝 Contributing
-
-We welcome all contributions! To contribute:
-
-1. **Fork** the repository
-2. **Clone** your fork to your machine
-3. Create a new branch (`git checkout -b feature/AmazingFeature`)
-4. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
-5. **Push** to the branch (`git push origin feature/AmazingFeature`)
-6. Open a **Pull Request**
-
-### 📝 Coding Standards
-
-- Follow [PSR-12](https://www.php-fig.org/psr/psr-12/) coding style
-- Write tests for new features
-- Update documentation when necessary
-- Clear and meaningful commit messages
-
----
-
-## 📄 License
-
-This project is distributed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
-
-```
-MIT License
-
-Copyright (c) 2024 Travel Management System
-
-Permission is hereby granted, free of charge...
-```
-
----
-
-## 📞 Contact
-
-**Author:** Le Tran Kim Hung
+**Tác giả:** Lê Trần Kim Hùng
 
 - 📧 Email: hungltk2004@gmail.com
-- 💼 LinkedIn: https://www.linkedin.com/in/hungltk/
-- 🐙 GitHub: https://github.com/LeTranKimHung
-
----
-
-## 🙏 Acknowledgments
-
-- [Laravel Framework](https://laravel.com/)
-- [Bootstrap](https://getbootstrap.com/)
-- [FontAwesome](https://fontawesome.com/)
-- And all contributors who have contributed to this project!
+- 🐙 GitHub: [LeTranKimHung](https://github.com/LeTranKimHung)
 
 ---
 
 <div align="center">
 
-**⭐️ If you find this project useful, please give it a star! ⭐️**
+**⭐ Nếu bạn thấy dự án này hữu ích, hãy tặng tôi 1 sao nhé! ⭐**
 
 Made with ❤️ by [Le Tran Kim Hung](https://github.com/LeTranKimHung)
 
