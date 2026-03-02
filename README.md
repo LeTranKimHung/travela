@@ -156,7 +156,7 @@ php artisan serve
 npm run dev
 ```
 
-Visit **[http://localhost:8000](http://localhost:8000)** 🎉
+Visit **[[http://travela.gt.tc/](http://travela.gt.tc/)]** 🎉
 
 ---
 
