@@ -156,7 +156,7 @@ php artisan serve
 npm run dev
 ```
 
-🎉 Access the application at: **http://127.0.0.1:8000**
+🎉 Access the application at: **http://travela.gt.tc/**
 
 ---
 
