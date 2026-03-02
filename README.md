@@ -1,19 +1,18 @@
-# 🌏 Travela - Travel Management System
-
 <div align="center">
 
-![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
-![Gemini AI](https://img.shields.io/badge/Gemini%20AI-Integration-blue?style=for-the-badge&logo=google-gemini&logoColor=white)
+# 🌏 Travela
 
-A comprehensive travel tour booking management system built on Laravel Framework, integrated with Artificial Intelligence (AI).
+### Travel Tour Booking & Management System
 
-[Features](#-features) •
-[Installation](#-installation) •
-[Usage](#-usage) •
-[Tech Stack](#-tech-stack)
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://mysql.com)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=flat-square&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Gemini AI](https://img.shields.io/badge/Gemini_AI-Integrated-4285F4?style=flat-square&logo=google&logoColor=white)](https://ai.google.dev)
+
+*A modern travel tour booking platform built with Laravel, powered by Gemini AI.*
+
+[🚀 Live Demo](http://travela.gt.tc/) · [🐛 Report Bug](https://github.com/LeTranKimHung/travela/issues) · [💡 Request Feature](https://github.com/LeTranKimHung/travela/issues)
 
 </div>
 
@@ -21,142 +20,143 @@ A comprehensive travel tour booking management system built on Laravel Framework
 
 ## 📋 Table of Contents
 
-- [Introduction](#-introduction)
-- [Key Features](#-key-features)
+- [About The Project](#-about-the-project)
+- [Features](#-features)
 - [Tech Stack](#-tech-stack)
-- [System Requirements](#-system-requirements)
-- [Installation](#-installation)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Project Structure](#-project-structure)
+- [Screenshots](#-screenshots)
 - [Contact](#-contact)
 
 ---
 
-## 🎯 Introduction
+## 🎯 About The Project
 
-**Travela** is a modern web application for managing travel tours, developed using the Laravel Framework. The system provides complete features for both customers and administrators, helping to optimize the tour booking process and business management for travel companies.
+**Travela** is a full-featured web application for managing travel tours, built on **Laravel 12**. It serves both customers and administrators, streamlining the booking process and day-to-day operations for travel businesses.
 
-Specifically, the system is integrated with **Gemini AI** to support customers by answering tour-related inquiries intelligently and automatically.
+The standout feature is the **Gemini AI** integration — an intelligent chatbot that supports customers around the clock, answering inquiries based on real-time tour data without requiring staff to be online.
 
 ---
 
-## 🚀 Key Features
+## ✨ Features
 
-### 🤖 Artificial Intelligence Integration (Gemini AI)
-- **Smart Chatbot**: Automatically responds to customer questions based on available tour data.
-- **24/7 Support**: Provides immediate assistance to customers without needing staff online.
-- **Contextual Awareness**: The AI understands current tour data to provide the most accurate suggestions.
+### 🤖 AI Integration — Gemini
 
-### 👨‍💼 Administrator (Admin Panel)
-- **Statistics Dashboard**: Overview of revenue and order counts with intuitive charts.
-- **Tour Management**: Add/Edit/Delete tours, manage detailed itineraries, and pricing.
-- **Order Management**: Track booking status and approve/cancel orders.
-- **Email System**: Automatically sends confirmation emails to customers when orders are approved.
-- **Blog Management**: Post travel news with support for custom author names for each post.
-- **Access Control**: Manage users and system access permissions.
+| Feature | Description |
+|---------|-------------|
+| Smart Chatbot | Automatically answers customer questions based on available tour data |
+| 24/7 Support | Always available — no staff required to be online |
+| Contextual Awareness | Understands current tour data to deliver the most accurate recommendations |
+
+### 👨‍💼 Admin Panel
+
+- **Statistics Dashboard** — Visual charts for revenue tracking and order summaries
+- **Tour Management** — Create, edit, and delete tours with detailed itineraries and pricing
+- **Order Management** — Monitor booking status; approve or cancel orders with ease
+- **Email Notifications** — Automatically sends confirmation emails upon order approval
+- **Blog Management** — Publish travel news and articles with custom author names per post
+- **Access Control** — Manage user accounts and system permissions
 
 ### 👥 Customer Portal
-- **Smart Search**: Find tours by destination, time, and price.
-- **Online Booking**: Simple and fast tour booking process.
-- **Account Management**: Track booking history and update personal information.
-- **Interaction**: Chat directly with the AI assistant for travel advice.
+
+- **Smart Search** — Filter tours by destination, date, and price range
+- **Online Booking** — Simple and fast tour reservation flow
+- **Account Management** — View booking history and update personal information
+- **AI Chat** — Talk directly with the AI assistant for personalized travel advice
 
 ---
 
 ## 🛠 Tech Stack
 
-### Backend
-```
-🔹 Laravel 12.x         - Modern PHP Framework
-🔹 MySQL 8.0              - Database Management System
-🔹 Google Gemini API      - Next-generation AI
-🔹 Mailtrap/SMTP          - Automated email delivery system
-```
-
-### Frontend
-```
-🔹 Blade Template         - PHP Template Engine
-🔹 Bootstrap 5.3          - CSS Framework for Responsive Design
-🔹 JavaScript (ES6+)      - Interactive feature handling
-🔹 FontAwesome 6          - Diverse icon library
-```
+| Layer | Technology |
+|-------|------------|
+| Framework | Laravel 12.x |
+| Language | PHP 8.2+, JavaScript ES6+ |
+| Templating | Blade (35.8%) |
+| Styling | SCSS / Bootstrap 5.3 (22.4% + 12.7%) |
+| Database | MySQL 8.0 |
+| AI | Google Gemini API |
+| Email | Mailtrap / SMTP |
+| Icons | FontAwesome 6 |
 
 ---
 
-## 💻 System Requirements
+## 🚀 Getting Started
 
-| Requirement | Version |
-|------------|---------|
+### Prerequisites
+
+Make sure you have the following installed:
+
+| Tool | Version |
+|------|---------|
 | PHP | ≥ 8.2 |
 | Composer | ≥ 2.5 |
 | MySQL | ≥ 8.0 |
 | Node.js | ≥ 18.x |
 
----
+### Installation
 
-## 📦 Installation
-
-### Step 1: Clone the Repository
+**1. Clone the repository**
 
 ```bash
 git clone https://github.com/LeTranKimHung/travela.git
 cd travela
 ```
 
-### Step 2: Install Dependencies
+**2. Install dependencies**
 
 ```bash
-# Install PHP dependencies
 composer install
-
-# Install Node dependencies
 npm install
 ```
 
-### Step 3: Environment Configuration
+**3. Set up environment**
 
 ```bash
-# Create .env file from example
 cp .env.example .env
-
-# Generate application key
 php artisan key:generate
 ```
 
-### Step 4: Database & API Configuration
-
-Open the `.env` file and update your database information along with the Gemini API Key:
+**4. Configure `.env`**
 
 ```env
+# Database
 DB_DATABASE=travel
 DB_USERNAME=root
 DB_PASSWORD=your_password
 
-# Gemini AI Configuration
+# Gemini AI
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# Mail Configuration (for booking notifications)
+# Mail
 MAIL_MAILER=smtp
 MAIL_HOST=sandbox.smtp.mailtrap.io
 MAIL_PORT=2525
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
 ```
 
-### Step 5: Run Migrations
+> 💡 Get your Gemini API Key at [Google AI Studio](https://aistudio.google.com/app/apikey) — it's free.
+
+**5. Run migrations**
 
 ```bash
 php artisan migrate
 ```
 
-### Step 6: Start the Application
+**6. Start the application**
 
 ```bash
-# Start Laravel server
+# Terminal 1
 php artisan serve
 
-# Build assets (Vite)
+# Terminal 2
 npm run dev
 ```
 
-🎉 Access the application at: **http://travela.gt.tc/**
+Visit **[http://localhost:8000](http://localhost:8000)** 🎉
 
 ---
 
@@ -165,35 +165,42 @@ npm run dev
 ```
 travela/
 ├── app/
-│   ├── Http/Controllers/
-│   │   ├── Admin/          # Admin-side management
-│   │   └── Clients/         # Customer-side logic (includes AI ChatController)
-│   ├── Mail/               # Email handling classes
-│   └── Models/             # Database Models
-├── database/               # Migrations and Seeders
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── Admin/          # Admin-side controllers
+│   │       └── Clients/        # Customer-side controllers (incl. AI ChatController)
+│   ├── Mail/                   # Mailable classes for email notifications
+│   └── Models/                 # Eloquent models
+├── bootstrap/                  # App bootstrap & cached files
+├── database/
+│   ├── migrations/             # Database schema definitions
+│   └── seeders/                # Sample data seeders
+├── docs/
+│   └── images/                 # Documentation screenshots
+├── public/                     # Publicly accessible assets
 ├── resources/
-│   ├── views/              # Blade Templates (Admin & Client)
-│   └── lang/               # Localization (if any)
+│   ├── views/                  # Blade templates (Admin & Client)
+│   └── lang/                   # Localization files
 ├── routes/
-│   └── web.php             # Application route declarations
-└── .env                    # Sensitive configuration storage
+│   └── web.php                 # Application route definitions
+├── storage/                    # Logs, cache, uploaded files
+└── .env.example                # Environment variable template
 ```
 
----
 
-## 📞 Contact
+## 📬 Contact
 
 **Author:** Le Tran Kim Hung
 
-- 📧 Email: hungltk2004@gmail.com
-- 🐙 GitHub: [LeTranKimHung](https://github.com/LeTranKimHung)
+[![Email](https://img.shields.io/badge/Email-hungltk2004%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:hungltk2004@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-LeTranKimHung-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/LeTranKimHung)
 
 ---
 
 <div align="center">
 
-**⭐ If you find this project useful, please give it a star! ⭐**
+If you find this project helpful, please give it a ⭐ — it means a lot!
 
-Made with ❤️ by [Le Tran Kim Hung](https://github.com/LeTranKimHung)
+*Made with ❤️ by [Le Tran Kim Hung](https://github.com/LeTranKimHung)*
 
 </div>
