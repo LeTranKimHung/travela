@@ -217,7 +217,7 @@
                                 </span>
                                 {{-- Price Badge --}}
                                 <span style="position:absolute; bottom:12px; right:12px; background:rgba(15,23,42,0.85); color:#fff; font-size:0.78rem; font-weight:700; padding:5px 12px; border-radius:20px; backdrop-filter:blur(4px);">
-                                    {{ number_format($tour->priceAdult, 0, ',', '.') }}đ
+                                    {{ format_currency($tour->priceAdult) }}
                                 </span>
                             </div>
 
@@ -261,7 +261,7 @@
                                     <div>
                                         <div style="font-size:0.7rem; color:#94a3b8; margin-bottom:2px;">Giá từ</div>
                                         <div style="font-size:1.05rem; font-weight:700; color:#0ea5e9;">
-                                            {{ number_format($tour->priceAdult, 0, ',', '.') }}<span style="font-size:0.72rem; font-weight:500; color:#64748b;">đ/người</span>
+                                            {{ format_currency($tour->priceAdult) }}<span style="font-size:0.72rem; font-weight:500; color:#64748b;">/người</span>
                                         </div>
                                     </div>
                                     <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}"

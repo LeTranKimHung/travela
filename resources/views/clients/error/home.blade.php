@@ -202,8 +202,7 @@
                         </p>
                         {{-- <p class="card-text">{{ $tour->destination }}</p> --}}
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold text-success">{{ number_format($tour->priceAdult, 0, ',', '.') }}
-                                VND/người</span>
+                            <span class="fw-bold text-success">{{ format_currency($tour->priceAdult) }}/người</span>
                             <a href="{{route ('tour-detail', ['id' => $tour->tourId])}}" class="btn btn-outline-primary btn-sm rounded-pill">Book now</a>
                         </div>
                     </div>
@@ -326,13 +325,13 @@
         <div class="row g-4 justify-content-center">
             @foreach($posts as $post)
             <div class="col-lg-4 col-md-6">
-                <div class="blog-item">
+                <div class="blog-item h-100 d-flex flex-column">
                     <div class="blog-img">
                         <div class="blog-img-inner">
                             @if($post->image)
-                                <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog/' . $post->image) }}" alt="{{ $post->title }}">
+                                <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog/' . $post->image) }}" alt="{{ $post->title }}" style="height: 250px; object-fit: cover;">
                             @else
-                                <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-1.jpg') }}" alt="Default">
+                                <img class="img-fluid w-100 rounded-top" src="{{ asset('clients/img/blog-1.jpg') }}" alt="Default" style="height: 250px; object-fit: cover;">
                             @endif
                             <div class="blog-icon">
                                 <a href="{{ route('blog-detail', $post->postId) }}" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
@@ -347,11 +346,13 @@
                                     class="fa fa-comments text-primary me-2"></i>1K</a>
                         </div>
                     </div>
-                    <div class="blog-content border border-top-0 rounded-bottom p-4">
+                    <div class="blog-content border border-top-0 rounded-bottom p-4 d-flex flex-column flex-grow-1">
                         <p class="mb-3">Đăng bởi: {{ $post->author }} </p>
-                        <a href="{{ route('blog-detail', $post->postId) }}" class="h4">{{ $post->title }}</a>
-                        <p class="my-3 text-truncate-2">{{ $post->summary }}</p>
-                        <a href="{{ route('blog-detail', $post->postId) }}" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
+                        <a href="{{ route('blog-detail', $post->postId) }}" class="h4 text-truncate-2" style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height: 3rem;">{{ $post->title }}</a>
+                        <p class="my-3 text-truncate-3" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; flex-grow:1;">{{ $post->summary }}</p>
+                        <div class="mt-auto">
+                            <a href="{{ route('blog-detail', $post->postId) }}" class="btn btn-primary rounded-pill py-2 px-4">Đọc Thêm</a>
+                        </div>
                     </div>
                 </div>
             </div>

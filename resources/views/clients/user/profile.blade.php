@@ -213,7 +213,7 @@
                                                         <span class="badge bg-light text-dark border mt-1"><i class="fas fa-child me-1"></i>{{ $tour->numChild }} trẻ em</span>
                                                     </div>
                                                 </td>
-                                                <td><span class="text-primary fw-bold fs-6">{{ number_format($tour->totalPrice) }} đ</span></td>
+                                                <td><span class="text-primary fw-bold fs-6">{{ format_currency($tour->totalPrice) }}</span></td>
                                                 <td>
                                                     @if($tour->bookingStatus == 'canceled')
                                                         <span class="badge rounded-pill bg-danger-soft text-danger px-3 py-2 border border-danger">
@@ -242,10 +242,10 @@
                                                     @else
                                                         <div class="bg-light p-2 rounded-3 text-start d-inline-block border shadow-sm" style="min-width: 150px;">
                                                             <div class="text-danger x-small mb-1">
-                                                                <i class="fas fa-minus-circle me-1"></i>Phí hủy: {{ number_format($tour->totalPrice * 0.1) }} đ
+                                                                <i class="fas fa-minus-circle me-1"></i>Phí hủy: {{ format_currency($tour->totalPrice * 0.1) }}
                                                             </div>
                                                             <div class="text-success fw-bold x-small">
-                                                                <i class="fas fa-undo me-1"></i>Hoàn: {{ number_format($tour->totalPrice * 0.9) }} đ
+                                                                <i class="fas fa-undo me-1"></i>Hoàn: {{ format_currency($tour->totalPrice * 0.9) }}
                                                             </div>
                                                         </div>
                                                     @endif

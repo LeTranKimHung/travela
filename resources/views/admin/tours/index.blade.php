@@ -29,7 +29,7 @@
                     <tr>
                         <td class="ps-4 fw-bold text-muted">#{{ $tour->tourId }}</td>
                         <td class="text-wrap" style="min-width:180px;">{{ $tour->title }}</td>
-                        <td class="fw-bold text-success">{{ number_format($tour->priceAdult) }} đ</td>
+                        <td class="fw-bold text-success">{{ format_currency($tour->priceAdult) }}</td>
                         <td class="d-none d-lg-table-cell text-muted small">{{ $tour->startDate }}</td>
                         <td class="d-none d-lg-table-cell text-muted small">{{ $tour->endDate }}</td>
                         <td class="pe-4 text-end">

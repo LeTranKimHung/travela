@@ -30,7 +30,7 @@
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Số tiền:</span>
-                        <strong class="text-danger fs-5">{{ number_format($bankDetails['amount']) }} VNĐ</strong>
+                        <strong class="text-danger fs-5">{{ format_currency($bankDetails['amount']) }}</strong>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Nội dung chuyển khoản:</span>

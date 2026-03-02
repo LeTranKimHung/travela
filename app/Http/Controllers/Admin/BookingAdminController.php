@@ -22,10 +22,60 @@ class BookingAdminController extends Controller
         $bookings = DB::table('tbl_booking')
             ->join('tbl_user', 'tbl_booking.userId', '=', 'tbl_user.userId')
             ->join('tbl_tours', 'tbl_booking.tourId', '=', 'tbl_tours.tourId')
+            ->whereNotIn('tbl_booking.bookingStatus', ['cancelled', 'canceled'])
             ->select('tbl_booking.*', 'tbl_user.userName', 'tbl_tours.title as tourTitle')
             ->get();
 
         return view('admin.bookings.index', compact('bookings'));
+    }
+
+    public function export()
+    {
+        $bookings = DB::table('tbl_booking')
+            ->join('tbl_user', 'tbl_booking.userId', '=', 'tbl_user.userId')
+            ->join('tbl_tours', 'tbl_booking.tourId', '=', 'tbl_tours.tourId')
+            ->whereNotIn('tbl_booking.bookingStatus', ['cancelled', 'canceled'])
+            ->select('tbl_booking.*', 'tbl_user.userName', 'tbl_tours.title as tourTitle')
+            ->get();
+
+        $fileName = 'bookings_export.csv';
+        $headers = array(
+            "Content-type"        => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('ID', 'Khách hàng', 'Tên Tour', 'Ngày đặt', 'Tổng tiền (VND)', 'Trạng thái');
+
+        $callback = function() use($bookings, $columns) {
+            $file = fopen('php://output', 'w');
+            // Write UTF-8 BOM so Excel opens it correctly
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fputcsv($file, $columns);
+
+            foreach ($bookings as $b) {
+                $statusMap = [
+                    'confirmed' => 'Đã xác nhận',
+                    'completed' => 'Hoàn thành',
+                    'pending'   => 'Chờ duyệt'
+                ];
+                $statusName = $statusMap[$b->bookingStatus] ?? $b->bookingStatus;
+
+                fputcsv($file, array(
+                    $b->bookingId,
+                    $b->userName,
+                    $b->tourTitle,
+                    $b->bookingDate,
+                    $b->totalPrice,
+                    $statusName
+                ));
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     public function updateStatus($id, $status)

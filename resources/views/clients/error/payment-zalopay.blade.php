@@ -25,7 +25,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <span class="text-muted">Tổng thanh toán:</span>
-                            <strong class="text-danger fs-5">{{ number_format($booking->totalPrice) }} VNĐ</strong>
+                            <strong class="text-danger fs-5">{{ format_currency($booking->totalPrice) }}</strong>
                         </div>
                     </div>
 

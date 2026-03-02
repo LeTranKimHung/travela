@@ -44,6 +44,14 @@ Route::get('/services', [ServiceController::class, 'index'])->name('services');
 Route::get('/packages', [PackageController::class, 'index'])->name('packages');
 Route::get('/tour-detail/{id}', [TourDetailController::class, 'index'])->name('tour-detail');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+
+// Cập nhật tùy chọn ngôn ngữ & tiền tệ
+Route::post('/set-preferences', function (\Illuminate\Http\Request $request) {
+    if ($request->has('currency')) {
+        session(['currency' => $request->currency]);
+    }
+    return response()->json(['success' => true]);
+})->name('set.preferences');
 Route::get('/blog-detail/{id}', [BlogController::class, 'show'])->name('blog-detail');
 Route::get('/destination', [DestinationController::class, 'index'])->name('destination');
 Route::get('/tours', [TourController::class, 'index'])->name('tours');
@@ -109,6 +117,7 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     
     // Quản lý Booking
     Route::get('/bookings', [BookingAdminController::class, 'index'])->name('admin.bookings.index');
+    Route::get('/bookings/export', [BookingAdminController::class, 'export'])->name('admin.bookings.export');
     Route::post('/bookings/update-status/{id}/{status}', [BookingAdminController::class, 'updateStatus'])->name('admin.bookings.update-status');
 
     // Quản lý Bài viết (Blog)

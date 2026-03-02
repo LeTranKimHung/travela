@@ -47,8 +47,22 @@ class TourAdminController extends Controller {
             'time' => $request->time,
             'quantity' => $request->quantity,
             'destination' => $request->destination,
-            'description' => $request->description
+            'description' => $request->description,
+            'policy' => $request->policy
         ]);
+
+        // Insert timelines
+        $timelineTitles = $request->input('timeline_title', []);
+        $timelineDescs = $request->input('timeline_desc', []);
+        for ($i = 0; $i < count($timelineTitles); $i++) {
+            if (!empty(trim($timelineTitles[$i])) || !empty(trim($timelineDescs[$i]))) {
+                DB::table('tbl_timeline')->insert([
+                    'tourId' => $tourId,
+                    'title' => $timelineTitles[$i],
+                    'description' => $timelineDescs[$i]
+                ]);
+            }
+        }
 
         if ($request->hasFile('images')) {
             $files = $request->file('images');
@@ -81,7 +95,8 @@ class TourAdminController extends Controller {
     public function edit($id) {
         $tour = DB::table('tbl_tours')->where('tourId', $id)->first();
         $images = DB::table('tbl_images')->where('tourId', $id)->get();
-        return view('admin.tours.edit', compact('tour', 'images'));
+        $timelines = DB::table('tbl_timeline')->where('tourId', $id)->get();
+        return view('admin.tours.edit', compact('tour', 'images', 'timelines'));
     }
 
     public function update(Request $request, $id) {
@@ -109,7 +124,22 @@ class TourAdminController extends Controller {
             'quantity' => $request->quantity,
             'destination' => $request->destination,
             'description' => $request->description,
+            'policy' => $request->policy
         ]);
+
+        // Update timelines
+        DB::table('tbl_timeline')->where('tourId', $id)->delete();
+        $timelineTitles = $request->input('timeline_title', []);
+        $timelineDescs = $request->input('timeline_desc', []);
+        for ($i = 0; $i < count($timelineTitles); $i++) {
+            if (!empty(trim($timelineTitles[$i])) || !empty(trim($timelineDescs[$i]))) {
+                DB::table('tbl_timeline')->insert([
+                    'tourId' => $id,
+                    'title' => $timelineTitles[$i],
+                    'description' => $timelineDescs[$i]
+                ]);
+            }
+        }
 
         if ($request->hasFile('images')) {
             $files = $request->file('images');

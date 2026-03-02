@@ -3,7 +3,10 @@
 @section('page-title', 'Quản lý Đơn đặt tour')
 
 @section('content')
-<h4 class="fw-bold mb-4">Danh sách Đơn đặt tour</h4>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Danh sách Đơn đặt tour</h4>
+    <a href="{{ route('admin.bookings.export') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i> Xuất Excel</a>
+</div>
 
 <div class="card">
     <div class="card-body p-0">
@@ -11,7 +14,7 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th class="ps-4">ID</th>
+                        <!-- <th class="ps-4">ID</th> ẩn id theo yêu cầu -->
                         <th>Khách hàng</th>
                         <th>Tour</th>
                         <th class="d-none d-md-table-cell">Ngày đặt</th>
@@ -23,11 +26,11 @@
                 <tbody>
                     @foreach($bookings as $booking)
                     <tr>
-                        <td class="ps-4 fw-bold text-muted">#{{ $booking->bookingId }}</td>
+                        <!-- <td class="ps-4 fw-bold text-muted">#{{ $booking->bookingId }}</td> ẩn id theo yêu cầu -->
                         <td>{{ $booking->userName }}</td>
                         <td class="text-truncate" style="max-width:160px;">{{ $booking->tourTitle }}</td>
                         <td class="d-none d-md-table-cell text-muted small">{{ $booking->bookingDate }}</td>
-                        <td class="fw-bold">{{ number_format($booking->totalPrice) }} đ</td>
+                        <td class="fw-bold">{{ format_currency($booking->totalPrice) }}</td>
                         <td>
                             @if(in_array($booking->bookingStatus, ['cancelled', 'canceled']))
                                 <span class="badge bg-danger">Đã hủy</span>

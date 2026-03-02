@@ -64,6 +64,39 @@
                     <textarea name="description" id="descriptionEditor" class="form-control" rows="4">{{ $tour->description }}</textarea>
                 </div>
                 <div class="col-md-12">
+                    <label class="form-label fw-semibold">Quy định & Chính sách</label>
+                    <textarea name="policy" id="policyEditor" class="form-control" rows="4">{{ $tour->policy ?? '' }}</textarea>
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="form-label fw-semibold mb-0">Lịch trình Tour</label>
+                        <button type="button" class="btn btn-sm btn-success" onclick="addTimeline()"><i class="fas fa-plus"></i> Thêm ngày mới</button>
+                    </div>
+                    <div id="timelineContainer">
+                        @if(isset($timelines) && count($timelines) > 0)
+                            @foreach($timelines as $index => $tl)
+                            <div class="timeline-item border p-3 mb-3 rounded" style="background:#f8fafc;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong class="text-primary">Lịch trình</strong>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('.timeline-item').remove()"><i class="fas fa-trash"></i></button>
+                                </div>
+                                <input type="text" name="timeline_title[]" class="form-control mb-2" value="{{ $tl->title }}" placeholder="Tiêu đề (VD: Ngày 1: TP.HCM - Đà Lạt)">
+                                <textarea name="timeline_desc[]" class="form-control" rows="3" placeholder="Chi tiết các hoạt động...">{{ $tl->description }}</textarea>
+                            </div>
+                            @endforeach
+                        @else
+                            <div class="timeline-item border p-3 mb-3 rounded" style="background:#f8fafc;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong class="text-primary">Lịch trình</strong>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('.timeline-item').remove()"><i class="fas fa-trash"></i></button>
+                                </div>
+                                <input type="text" name="timeline_title[]" class="form-control mb-2" placeholder="Tiêu đề (VD: Ngày 1: TP.HCM - Đà Lạt)">
+                                <textarea name="timeline_desc[]" class="form-control" rows="3" placeholder="Chi tiết các hoạt động..."></textarea>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-12">
                     <label class="form-label fw-semibold">Ảnh hiện tại</label>
                     <div class="d-flex flex-wrap gap-2 mb-3">
                         @foreach($images as $img)
@@ -89,20 +122,38 @@
 
 @section('scripts')
 <script>
-    let editor;
+    let editor, policyEditor;
     ClassicEditor.create(document.querySelector('#descriptionEditor'), {
         toolbar: ['heading','|','bold','italic','|','bulletedList','numberedList','|','blockQuote','link','insertTable','|','undo','redo'],
     }).then(newEditor => {
         editor = newEditor;
     }).catch(err => console.error(err));
 
+    ClassicEditor.create(document.querySelector('#policyEditor'), {
+        toolbar: ['heading','|','bold','italic','|','bulletedList','numberedList','|','blockQuote','link','insertTable','|','undo','redo'],
+    }).then(newEditor => {
+        policyEditor = newEditor;
+    }).catch(err => console.error(err));
+
     // Đảm bảo dữ liệu được cập nhật từ CKEditor vào textarea trước khi submit
     document.querySelector('form').addEventListener('submit', function(e) {
-        if (editor) {
-            const data = editor.getData();
-            document.querySelector('#descriptionEditor').value = data;
-        }
+        if (editor) document.querySelector('#descriptionEditor').value = editor.getData();
+        if (policyEditor) document.querySelector('#policyEditor').value = policyEditor.getData();
     });
+
+    function addTimeline() {
+        const html = `
+            <div class="timeline-item border p-3 mb-3 rounded" style="background:#f8fafc;">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <strong class="text-primary">Lịch trình mới</strong>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('.timeline-item').remove()"><i class="fas fa-trash"></i></button>
+                </div>
+                <input type="text" name="timeline_title[]" class="form-control mb-2" placeholder="Tiêu đề (VD: Ngày 2: Tham quan thung lũng tình yêu)">
+                <textarea name="timeline_desc[]" class="form-control" rows="3" placeholder="Chi tiết các hoạt động..."></textarea>
+            </div>
+        `;
+        document.getElementById('timelineContainer').insertAdjacentHTML('beforeend', html);
+    }
 
     document.getElementById('imageInput').addEventListener('change', function(event) {
         const preview = document.getElementById('imagePreview');

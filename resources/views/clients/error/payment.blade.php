@@ -37,17 +37,17 @@
                         {{ $booking->bookingDate }}</p>
                     <hr>
                     <div class="d-flex justify-content-between mb-2">
-                        <span>Người lớn: {{ $booking->numAdults }} x {{ number_format($tour->priceAdult) }} VNĐ</span>
-                        <span>{{ number_format($booking->numAdults * $tour->priceAdult) }} VNĐ</span>
+                        <span>Người lớn: {{ $booking->numAdults }} x {{ format_currency($tour->priceAdult) }}</span>
+                        <span>{{ format_currency($booking->numAdults * $tour->priceAdult) }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
-                        <span>Trẻ em: {{ $booking->numChild }} x {{ number_format($tour->priceChild) }} VNĐ</span>
-                        <span>{{ number_format($booking->numChild * $tour->priceChild) }} VNĐ</span>
+                        <span>Trẻ em: {{ $booking->numChild }} x {{ format_currency($tour->priceChild) }}</span>
+                        <span>{{ format_currency($booking->numChild * $tour->priceChild) }}</span>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between fw-bold text-danger fs-5">
                         <span>TỔNG CỘNG:</span>
-                        <span>{{ number_format($totalPrice) }} VNĐ</span>
+                        <span>{{ format_currency($totalPrice) }}</span>
                     </div>
                 </div>
             </div>

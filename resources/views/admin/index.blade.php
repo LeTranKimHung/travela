@@ -38,7 +38,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <p class="text-muted small mb-1">Doanh thu tháng</p>
-                    <h2 class="fw-bold mb-0">{{ number_format($totalRevenue) }} đ</h2>
+                    <h2 class="fw-bold mb-0">{{ format_currency($totalRevenue) }}</h2>
                 </div>
                 <div style="width:52px;height:52px;border-radius:14px;background:rgba(245,158,11,0.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#f59e0b;">
                     <i class="fas fa-dollar-sign"></i>
