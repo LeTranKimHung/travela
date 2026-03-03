@@ -129,6 +129,28 @@
                                 </div>
                             </div>
 
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <select class="form-select" id="coupon_code" name="coupon_code">
+                                        <option value="">-- Không sử dụng mã giảm giá --</option>
+                                        @if(isset($availableCoupons) && count($availableCoupons) > 0)
+                                            @foreach($availableCoupons as $coupon)
+                                                <option value="{{ $coupon->code }}">
+                                                    {{ $coupon->code }} - Giảm 
+                                                    @if($coupon->type == 'percent')
+                                                        {{ floatval($coupon->value) }}%
+                                                    @else
+                                                        {{ number_format($coupon->value, 0, ',', '.') }}đ
+                                                    @endif
+                                                    (Đơn từ {{ number_format($coupon->min_order_value, 0, ',', '.') }}đ)
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <label for="coupon_code">Mã giảm giá (nếu có)</label>
+                                </div>
+                            </div>
+
                             <input type="hidden" name="userId" value="{{ $user->userId ?? '' }}">
 
                             <div class="col-12">

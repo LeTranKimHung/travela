@@ -53,6 +53,9 @@
                                 <label for="password"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="password" id="password" placeholder="Mật khẩu" required/>
                             </div>
+                            <div style="text-align: right; margin-top: -15px; margin-bottom: 15px;">
+                                <a href="{{ route('password.request') }}" style="font-size: 0.85rem; color: #13357b; text-decoration: none; font-weight: 600;">Quên mật khẩu?</a>
+                            </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Đăng nhập" />
                             </div>
@@ -141,18 +144,20 @@
                             </div>
 
                             {{-- Đồng ý điều khoản --}}
-                            <div class="form-group {{ $errors->has('agree') ? 'has-error' : '' }}" style="display:flex; align-items:flex-start; gap:8px; padding:4px 0;">
-                                <input type="checkbox" name="agree" id="agree" value="1" {{ old('agree') ? 'checked' : '' }}
-                                    style="margin-top:3px; width:16px; height:16px; accent-color:#13357b; flex-shrink:0;">
-                                <label for="agree" style="font-size:0.82rem; color:#475569; cursor:pointer; line-height:1.5; margin:0;">
-                                    Tôi đã đọc và đồng ý với
-                                    <a href="#" style="color:#13357b; font-weight:600; text-decoration:none;">Điều khoản sử dụng</a>
-                                    và
-                                    <a href="#" style="color:#13357b; font-weight:600; text-decoration:none;">Chính sách bảo mật</a>
-                                    của Travela.
-                                </label>
+                            <div class="form-group-agreement {{ $errors->has('agree') ? 'has-error' : '' }}" style="margin-bottom: 25px;">
+                                <div style="display:flex; align-items:flex-start; gap:8px; padding:4px 0;">
+                                    <input type="checkbox" name="agree" id="agree" value="1" {{ old('agree') ? 'checked' : '' }}
+                                        style="margin-top:2px; width:16px; height:16px; accent-color:#13357b; flex-shrink:0; cursor:pointer;">
+                                    <label for="agree" style="font-size:0.82rem; color:#475569; cursor:pointer; line-height:1.5; margin:0; display:inline;">
+                                        Tôi đã đọc và đồng ý với
+                                        <a href="{{ route('terms') }}" style="color:#13357b; font-weight:600; text-decoration:none;" target="_blank">Điều khoản sử dụng</a>
+                                        và
+                                        <a href="{{ route('privacy') }}" style="color:#13357b; font-weight:600; text-decoration:none;" target="_blank">Chính sách bảo mật</a>
+                                        của Travela.
+                                    </label>
+                                </div>
                                 @error('agree')
-                                    <span class="field-error" style="display:block; width:100%;"><i class="zmdi zmdi-alert-circle"></i> {{ $message }}</span>
+                                    <span class="field-error"><i class="zmdi zmdi-alert-circle"></i> {{ $message }}</span>
                                 @enderror
                             </div>
 

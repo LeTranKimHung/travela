@@ -45,14 +45,15 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Điểm đến</label>
-                    <input type="text" name="destination" class="form-control" placeholder="VD: Đà Lạt" required>
+                    <select name="destination" id="destinationSelect" class="form-select" required>
+                        <option value="">Chọn khu vực trước</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Khu vực</label>
-                    <select name="domain" class="form-select" required>
-                        <option value="b">Miền Bắc</option>
-                        <option value="t">Miền Trung</option>
-                        <option value="n">Miền Nam</option>
+                    <select name="domain" id="domainSelect" class="form-select" required>
+                        <option value="trong_nuoc">Trong nước</option>
+                        <option value="ngoai_nuoc">Ngoài nước</option>
                     </select>
                 </div>
                 <div class="col-md-12">
@@ -154,6 +155,34 @@
             reader.readAsDataURL(files[i]);
         }
     });
+
+    // Handle Dynamic Destinations
+    const vnProvinces = [
+        "An Giang", "Bà Rịa - Vũng Tàu", "Bắc Giang", "Bắc Kạn", "Bạc Liêu", "Bắc Ninh", "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau", "Cần Thơ", "Cao Bằng", "Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương", "Hải Phòng", "Hậu Giang", "Hòa Bình", "Hồ Chí Minh", "Hưng Yên", "Khánh Hòa", "Kiên Giang", "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định", "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La", "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "Trà Vinh", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"
+    ];
+    const intlCountries = [
+        "Ai Cập", "Anh", "Ấn Độ", "Brazil", "Canada", "Đài Loan", "Đức", "Hàn Quốc", "Hà Lan", "Malaysia", "Mỹ", "Nam Phi", "New Zealand", "Nhật Bản", "Pháp", "Singapore", "Tây Ban Nha", "Thái Lan", "Thụy Sĩ", "Trung Quốc", "Úc", "Ý"
+    ];
+
+    const domainSelect = document.getElementById('domainSelect');
+    const destinationSelect = document.getElementById('destinationSelect');
+
+    function updateDestinations() {
+        const domain = domainSelect.value;
+        const options = domain === 'trong_nuoc' ? vnProvinces : intlCountries;
+        
+        destinationSelect.innerHTML = '';
+        options.forEach(dest => {
+            const opt = document.createElement('option');
+            opt.value = dest;
+            opt.textContent = dest;
+            destinationSelect.appendChild(opt);
+        });
+    }
+
+    domainSelect.addEventListener('change', updateDestinations);
+    // Init on load
+    updateDestinations();
 </script>
 <style>.ck-editor__editable { min-height: 200px; }</style>
 @endsection

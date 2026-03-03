@@ -36,10 +36,23 @@ Route::post('/register', [LoginController::class, 'register'])->name('register')
 Route::post('/login', [LoginController::class, 'login'])->name('user-login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
+
+// ===== FORGOT PASSWORD ROUTES =====
+Route::get('password/reset', [App\Http\Controllers\clients\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [App\Http\Controllers\clients\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [App\Http\Controllers\clients\ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [App\Http\Controllers\clients\ForgotPasswordController::class, 'reset'])->name('password.update');
+
 // ===== PUBLIC ROUTES =====
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/terms-of-use', function () {
+    return view('clients.error.terms');
+})->name('terms');
+Route::get('/privacy-policy', function () {
+    return view('clients.error.privacy');
+})->name('privacy');
 Route::get('/services', [ServiceController::class, 'index'])->name('services');
 Route::get('/packages', [PackageController::class, 'index'])->name('packages');
 Route::get('/tour-detail/{id}', [TourDetailController::class, 'index'])->name('tour-detail');
@@ -151,4 +164,12 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::get('/users/edit/{id}', [UserAdminController::class, 'edit'])->name('admin.users.edit');
     Route::post('/users/update/{id}', [UserAdminController::class, 'update'])->name('admin.users.update');
     Route::post('/users/destroy/{id}', [UserAdminController::class, 'destroy'])->name('admin.users.destroy');
+
+    // Quản lý Mã Giảm giá
+    Route::get('/coupons', [App\Http\Controllers\Admin\CouponAdminController::class, 'index'])->name('admin.coupons.index');
+    Route::get('/coupons/create', [App\Http\Controllers\Admin\CouponAdminController::class, 'create'])->name('admin.coupons.create');
+    Route::post('/coupons/store', [App\Http\Controllers\Admin\CouponAdminController::class, 'store'])->name('admin.coupons.store');
+    Route::get('/coupons/edit/{id}', [App\Http\Controllers\Admin\CouponAdminController::class, 'edit'])->name('admin.coupons.edit');
+    Route::post('/coupons/update/{id}', [App\Http\Controllers\Admin\CouponAdminController::class, 'update'])->name('admin.coupons.update');
+    Route::post('/coupons/destroy/{id}', [App\Http\Controllers\Admin\CouponAdminController::class, 'destroy'])->name('admin.coupons.destroy');
 });

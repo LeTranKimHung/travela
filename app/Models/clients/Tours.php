@@ -20,9 +20,15 @@ class Tours extends Model
     {
         $query = DB::table($this->table);
         
-        // Lọc theo domain (Miền Bắc, Miền Trung, Miền Nam)
+        // Lọc theo domain (Trong nước, Ngoài nước)
         if (!empty($filters['domain'])) {
-            $query->where('domain', $filters['domain']);
+            if ($filters['domain'] == 'trong_nuoc') {
+                $query->whereIn('domain', ['b', 't', 'n', 'trong_nuoc']);
+            } elseif ($filters['domain'] == 'ngoai_nuoc') {
+                $query->whereNotIn('domain', ['b', 't', 'n'])->orWhereNull('domain');
+            } else {
+                $query->where('domain', $filters['domain']);
+            }
         }
         
         // Lọc theo điểm đến hoặc tiêu đề tour

@@ -62,14 +62,14 @@
                                 </label>
                                 <div class="d-flex flex-column gap-1">
                                     @php
-                                        $domainMap = ['b' => ['label'=>'Miền Bắc','icon'=>'fas fa-mountain','color'=>'#0ea5e9'],
-                                                       't' => ['label'=>'Miền Trung','icon'=>'fas fa-sun','color'=>'#f59e0b'],
-                                                       'n' => ['label'=>'Miền Nam','icon'=>'fas fa-umbrella-beach','color'=>'#10b981']];
+                                        $domainMap = [
+                                            'trong_nuoc' => ['label'=>'Trong nước','icon'=>'fas fa-map-marked-alt','color'=>'#0ea5e9'],
+                                            'ngoai_nuoc' => ['label'=>'Ngoài nước','icon'=>'fas fa-globe-americas','color'=>'#f59e0b']
+                                        ];
                                     @endphp
-                                    @foreach($domains as $domain)
-                                    @php $dm = $domainMap[$domain] ?? ['label'=>$domain,'icon'=>'fas fa-map-pin','color'=>'#64748b']; @endphp
-                                    <label style="cursor:pointer; padding:8px 12px; border-radius:8px; border:1.5px solid {{ request('domain')==$domain ? $dm['color'] : '#e2e8f0' }}; background:{{ request('domain')==$domain ? 'rgba(14,165,233,0.06)' : '#fff' }}; display:flex; align-items:center; gap:8px; transition:all 0.2s;" onclick="this.querySelector('input').click(); document.getElementById('filterForm').submit();">
-                                        <input type="radio" name="domain" value="{{ $domain }}" {{ request('domain')==$domain ? 'checked' : '' }} style="display:none;">
+                                    @foreach($domainMap as $val => $dm)
+                                    <label style="cursor:pointer; padding:8px 12px; border-radius:8px; border:1.5px solid {{ request('domain')==$val ? $dm['color'] : '#e2e8f0' }}; background:{{ request('domain')==$val ? 'rgba(14,165,233,0.06)' : '#fff' }}; display:flex; align-items:center; gap:8px; transition:all 0.2s;" onclick="this.querySelector('input').click(); document.getElementById('filterForm').submit();">
+                                        <input type="radio" name="domain" value="{{ $val }}" {{ request('domain')==$val ? 'checked' : '' }} style="display:none;">
                                         <i class="{{ $dm['icon'] }}" style="color:{{ $dm['color'] }}; width:16px; text-align:center;"></i>
                                         <span style="font-size:0.88rem; font-weight:500; color:#334155;">{{ $dm['label'] }}</span>
                                     </label>
@@ -88,9 +88,26 @@
                                 <label style="font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#64748b; display:block; margin-bottom:8px;">
                                     <i class="fas fa-map-marker-alt me-1 text-danger"></i>Điểm đến
                                 </label>
+                                @php
+                                    $vnProvinces = [
+                                        "An Giang", "Bà Rịa - Vũng Tàu", "Bắc Giang", "Bắc Kạn", "Bạc Liêu", "Bắc Ninh", "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau", "Cần Thơ", "Cao Bằng", "Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương", "Hải Phòng", "Hậu Giang", "Hòa Bình", "Hồ Chí Minh", "Hưng Yên", "Khánh Hòa", "Kiên Giang", "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định", "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La", "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "Trà Vinh", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"
+                                    ];
+                                    $intlCountries = [
+                                        "Ai Cập", "Anh", "Ấn Độ", "Brazil", "Canada", "Đài Loan", "Đức", "Hàn Quốc", "Hà Lan", "Malaysia", "Mỹ", "Nam Phi", "New Zealand", "Nhật Bản", "Pháp", "Singapore", "Tây Ban Nha", "Thái Lan", "Thụy Sĩ", "Trung Quốc", "Úc", "Ý"
+                                    ];
+                                    
+                                    if (request('domain') == 'trong_nuoc') {
+                                        $displayDestinations = $vnProvinces;
+                                    } elseif (request('domain') == 'ngoai_nuoc') {
+                                        $displayDestinations = $intlCountries;
+                                    } else {
+                                        $displayDestinations = array_merge($vnProvinces, $intlCountries);
+                                        sort($displayDestinations);
+                                    }
+                                @endphp
                                 <select name="destination" class="form-select form-select-sm" onchange="this.form.submit()" style="border-radius:8px; border:1.5px solid #e2e8f0; font-size:0.88rem;">
                                     <option value="">Tất cả điểm đến</option>
-                                    @foreach($destinations as $dest)
+                                    @foreach($displayDestinations as $dest)
                                         <option value="{{ $dest }}" {{ request('destination')==$dest ? 'selected' : '' }}>
                                             {{ $dest }}
                                         </option>
@@ -196,8 +213,16 @@
                     @foreach($tours as $tour)
                     @php
                         $img = $tour->images[0] ?? null;
-                        $domainLabel = ['b'=>'Miền Bắc','t'=>'Miền Trung','n'=>'Miền Nam'][$tour->domain] ?? $tour->domain;
-                        $domainColor = ['b'=>'#0ea5e9','t'=>'#f59e0b','n'=>'#10b981'][$tour->domain] ?? '#64748b';
+                        $domainLabelMap = [
+                            'b'=>'Miền Bắc', 't'=>'Miền Trung', 'n'=>'Miền Nam',
+                            'trong_nuoc'=>'Trong nước', 'ngoai_nuoc'=>'Ngoài nước'
+                        ];
+                        $domainColorMap = [
+                            'b'=>'#0ea5e9', 't'=>'#f59e0b', 'n'=>'#10b981',
+                            'trong_nuoc'=>'#0ea5e9', 'ngoai_nuoc'=>'#f59e0b'
+                        ];
+                        $domainLabel = $domainLabelMap[$tour->domain] ?? $tour->domain;
+                        $domainColor = $domainColorMap[$tour->domain] ?? '#64748b';
                     @endphp
                     <div class="col-md-6 col-xl-4">
                         <div style="background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.07); display:flex; flex-direction:column; height:100%; transition:transform 0.25s, box-shadow 0.25s;"

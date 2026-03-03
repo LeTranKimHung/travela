@@ -188,6 +188,9 @@
             <a class="nav-link {{ Request::routeIs('admin.bookings.*') ? 'active' : '' }}" href="{{ route('admin.bookings.index') }}">
                 <i class="fas fa-calendar-check"></i> Đơn đặt tour
             </a>
+            <a class="nav-link {{ Request::routeIs('admin.coupons.*') ? 'active' : '' }}" href="{{ route('admin.coupons.index') }}">
+                <i class="fas fa-ticket-alt"></i> Mã Giảm giá
+            </a>
             <a class="nav-link {{ Request::routeIs('admin.posts.*') ? 'active' : '' }}" href="{{ route('admin.posts.index') }}">
                 <i class="fas fa-newspaper"></i> Bài viết
             </a>
