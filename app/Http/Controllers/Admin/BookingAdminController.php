@@ -101,6 +101,12 @@ class BookingAdminController extends Controller
             ->where('bookingId', $id)
             ->update(['bookingStatus' => $status]);
 
+        // Nếu admin huỷ đơn, cộng lại số lượng trống vào tour
+        if (in_array($status, ['cancelled', 'canceled'])) {
+            $totalPeople = $booking->numAdults + $booking->numChild;
+            DB::table('tbl_tours')->where('tourId', $booking->tourId)->increment('quantity', $totalPeople);
+        }
+
         // Gửi thông báo & Email cho khách hàng
         try {
             if ($booking) {

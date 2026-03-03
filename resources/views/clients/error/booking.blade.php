@@ -45,7 +45,23 @@
                     <h3 class="mb-4">Thông Tin Đặt Tour</h3>
                     <form action="{{ route('booking.submit') }}" method="POST">
                         @csrf
-                        <div class="row g-3">
+                            @if(session('error'))
+                                <div class="col-12">
+                                    <div class="alert alert-danger mb-3">{{ session('error') }}</div>
+                                </div>
+                            @endif
+                            @if($errors->any())
+                                <div class="col-12">
+                                    <div class="alert alert-danger mb-3">
+                                        <ul class="mb-0">
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="name" name="name" 
@@ -127,5 +143,36 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const adultsInput = document.getElementById('numAdults');
+        const childInput = document.getElementById('numChild');
+        
+        function updateChildMax() {
+            const adults = parseInt(adultsInput.value) || 0;
+            const maxChild = Math.floor(adults / 2);
+            childInput.setAttribute('max', maxChild);
+            
+            if (parseInt(childInput.value) > maxChild) {
+                childInput.value = maxChild;
+                alert('Mỗi 2 người lớn chỉ được kèm theo tối đa 1 trẻ em (tối đa ' + maxChild + ' trẻ em).');
+            }
+        }
+        
+        adultsInput.addEventListener('input', updateChildMax);
+        childInput.addEventListener('input', function() {
+            const adults = parseInt(adultsInput.value) || 0;
+            const maxChild = Math.floor(adults / 2);
+            if (parseInt(childInput.value) > maxChild) {
+                childInput.value = maxChild;
+                alert('Mỗi 2 người lớn chỉ được kèm theo tối đa 1 trẻ em (tối đa ' + maxChild + ' trẻ em).');
+            }
+        });
+        
+        // Initial setup
+        updateChildMax();
+    });
+</script>
 
 @include('clients.blocks.footer')

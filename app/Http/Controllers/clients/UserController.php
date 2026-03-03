@@ -127,6 +127,12 @@ class UserController extends Controller
             ->where('status', 'success')
             ->update(['status' => 'refunded']);
 
+        // Cộng lại số lượng người vào sĩ số chỗ trống của tour
+        $totalPeople = $booking->numAdults + $booking->numChild;
+        \Illuminate\Support\Facades\DB::table('tbl_tours')
+            ->where('tourId', $booking->tourId)
+            ->increment('quantity', $totalPeople);
+
         // Ghi log hoặc cập nhật thông tin thanh toán (tùy schema) - Ở đây ta thông báo cho User
         return redirect()->route('profile')->with('success', "Hủy tour thành công! Bạn bị khấu trừ 10% phí dịch vụ (" . number_format($penalty) . " đ). Số tiền thực nhận/hoàn (90%): " . number_format($refundAmount) . " đ.");
     }

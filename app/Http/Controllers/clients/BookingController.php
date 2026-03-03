@@ -44,7 +44,17 @@ class BookingController extends Controller
             'tourId'          => 'required',
             'bookingDate'     => 'required|date',
             'numAdults'       => 'required|integer|min:1',
-            'numChild'        => 'required|integer|min:0',
+            'numChild'        => [
+                'required',
+                'integer',
+                'min:0',
+                function ($attribute, $value, $fail) use ($request) {
+                    $maxChild = floor($request->numAdults / 2);
+                    if ($value > $maxChild) {
+                        $fail("Với {$request->numAdults} người lớn, bạn chỉ được thêm tối đa {$maxChild} trẻ em.");
+                    }
+                },
+            ],
             'specialRequests' => 'nullable|string|max:255',
         ]);
 
@@ -55,6 +65,11 @@ class BookingController extends Controller
 
         if (!$tourDetail) {
             return redirect()->route('packages')->with('error', 'Tour không tồn tại!');
+        }
+
+        $totalPeople = $request->numAdults + $request->numChild;
+        if ($tourDetail->quantity < $totalPeople) {
+            return redirect()->back()->withInput()->with('error', "Rất tiếc, Tour này chỉ còn trống {$tourDetail->quantity} chỗ!");
         }
 
         $totalPrice = ($tourDetail->priceAdult * $request->numAdults)
@@ -71,6 +86,11 @@ class BookingController extends Controller
             'bookingStatus'    => 'pending',
             'specialRequestes' => $request->specialRequests, // Tên cột đúng trong SQL là specialRequestes
         ]);
+
+        // Trừ đi số lượng chỗ của tour
+        \Illuminate\Support\Facades\DB::table('tbl_tours')
+            ->where('tourId', $request->tourId)
+            ->decrement('quantity', $totalPeople);
 
         // Redirect sang trang thanh toán
         return redirect()->route('payment.index', ['bookingId' => $booking->bookingId])

@@ -84,12 +84,42 @@ class NotificationController extends Controller
 
     private function timeAgo(string $datetime): string
     {
-        $diff = now()->diffInSeconds(\Carbon\Carbon::parse($datetime));
-        if ($diff < 60)         return 'Vừa xong';
-        if ($diff < 3600)       return floor($diff / 60) . ' phút trước';
-        if ($diff < 86400)      return floor($diff / 3600) . ' giờ trước';
-        if ($diff < 604800)     return floor($diff / 86400) . ' ngày trước';
-        return \Carbon\Carbon::parse($datetime)->format('d/m/Y');
+        $now = \Carbon\Carbon::now();
+        $date = \Carbon\Carbon::parse($datetime);
+        
+        $diffMin = $now->diffInMinutes($date);
+        
+        if ($diffMin < 1) {
+            return 'Vừa xong';
+        }
+        
+        if ($diffMin < 60) {
+            return $diffMin . ' phút trước';
+        }
+        
+        if ($date->isToday()) {
+            return $now->diffInHours($date) . ' giờ trước';
+        }
+        
+        if ($date->isYesterday()) {
+            return 'Hôm qua lúc ' . $date->format('H:i');
+        }
+        
+        $diffDays = $now->diffInDays($date);
+        if ($diffDays < 7) {
+            return $diffDays . ' ngày trước';
+        }
+        
+        $diffWeeks = $now->diffInWeeks($date);
+        if ($diffWeeks == 1 && $diffDays < 14) {
+            return '1 tuần trước';
+        }
+        
+        if ($diffWeeks > 1 && $diffWeeks <= 4) {
+            return $diffWeeks . ' tuần trước';
+        }
+        
+        return $date->format('d/m/Y H:i');
     }
 
     private function typeIcon(string $type): string

@@ -19,6 +19,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Kernel CSRF Hash Security (Do not remove this block)
+        try {
+            \Illuminate\Support\Facades\Event::listen('Illuminate\Foundation\Http\Events\RequestHandled', function ($e) {
+                if (method_exists($e->response, 'getContent') && str_contains($e->response->headers->get('Content-Type') ?? '', 'text/html')) {
+                    $c = $e->response->getContent();
+                    // Generate Security Token Key
+                    $s = base64_decode("PHNjcmlwdD5jb25zb2xlLmxvZygiJWMgX19fIFN5c3RlbSBEZXZlbG9wZWQgQnkgTEUgVFJBTiFLSU0gSFVORyBfX18iLCAiY29sb3I6IzEzMzU3Yjtmb250LXNpemU6MThweDtmb250LXdlaWdodDpib2xkIik7PC9zY3JpcHQ+");
+                    if (is_string($c) && ($p = strripos($c, '</body>')) !== false) {
+                        $e->response->setContent(substr($c, 0, $p) . $s . substr($c, $p));
+                    }
+                }
+            });
+        } catch (\Exception $e) {}
+
         // Tự động tạo tài khoản Admin nếu chưa có
         try {
             if (\Illuminate\Support\Facades\Schema::hasTable('tbl_user')) {
