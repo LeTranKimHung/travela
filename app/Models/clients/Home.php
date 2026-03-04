@@ -12,6 +12,8 @@ class Home extends Model
     public function getHomeTours()
     {
         $tours = DB::table($this->table)
+            ->where('startDate', '>=', now()->format('Y-m-d'))
+            ->where('quantity', '>', 0)
             ->get();
         foreach($tours as $tour){
             $tour->images = DB::table('tbl_images')

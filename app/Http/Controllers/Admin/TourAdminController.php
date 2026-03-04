@@ -14,8 +14,23 @@ class TourAdminController extends Controller {
         $this->notif = $notif;
     }
 
-    public function index() {
-        $tours = DB::table('tbl_tours')->get();
+    public function index(Request $request) {
+        $query = DB::table('tbl_tours');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('tourId', 'like', "%{$search}%")
+                  ->orWhere('destination', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('domain')) {
+            $query->where('domain', $request->domain);
+        }
+
+        $tours = $query->orderBy('tourId', 'desc')->get();
         return view('admin.tours.index', compact('tours'));
     }
 

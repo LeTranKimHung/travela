@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Services\NotificationService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -17,14 +18,29 @@ class BookingAdminController extends Controller
         $this->notif = $notif;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $bookings = DB::table('tbl_booking')
+        $query = DB::table('tbl_booking')
             ->join('tbl_user', 'tbl_booking.userId', '=', 'tbl_user.userId')
             ->join('tbl_tours', 'tbl_booking.tourId', '=', 'tbl_tours.tourId')
-            ->whereNotIn('tbl_booking.bookingStatus', ['cancelled', 'canceled'])
-            ->select('tbl_booking.*', 'tbl_user.userName', 'tbl_tours.title as tourTitle')
-            ->get();
+            ->select('tbl_booking.*', 'tbl_user.userName', 'tbl_tours.title as tourTitle');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('tbl_user.userName', 'like', "%{$search}%")
+                  ->orWhere('tbl_tours.title', 'like', "%{$search}%")
+                  ->orWhere('tbl_booking.bookingId', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('tbl_booking.bookingStatus', $request->status);
+        } else {
+            $query->whereNotIn('tbl_booking.bookingStatus', ['cancelled', 'canceled']);
+        }
+
+        $bookings = $query->orderBy('tbl_booking.bookingId', 'desc')->get();
 
         return view('admin.bookings.index', compact('bookings'));
     }

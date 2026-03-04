@@ -10,13 +10,37 @@
     </a>
 </div>
 
+<!-- Form lọc -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form action="{{ route('admin.tours.index') }}" method="GET" class="row g-3">
+            <div class="col-md-5">
+                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm theo tên tour, ID, điểm đến..." value="{{ request('search') }}">
+            </div>
+            <div class="col-md-3">
+                <select name="domain" class="form-select">
+                    <option value="">Tất cả khu vực</option>
+                    <option value="Trong nước" {{ request('domain') == 'Trong nước' ? 'selected' : '' }}>Trong nước</option>
+                    <option value="Ngoài nước" {{ request('domain') == 'Ngoài nước' ? 'selected' : '' }}>Ngoài nước</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search me-1"></i> Tìm kiếm</button>
+            </div>
+            <div class="col-md-2">
+                <a href="{{ route('admin.tours.index') }}" class="btn btn-secondary w-100"><i class="fas fa-undo me-1"></i> Đặt lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="card">
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th class="ps-4">ID</th>
+                        <!-- <th class="ps-4">ID</th> -->
                         <th>Tên Tour</th>
                         <th>Giá người lớn</th>
                         <th class="d-none d-lg-table-cell">Bắt đầu</th>
@@ -26,9 +50,17 @@
                 </thead>
                 <tbody>
                     @foreach($tours as $tour)
-                    <tr>
-                        <td class="ps-4 fw-bold text-muted">#{{ $tour->tourId }}</td>
-                        <td class="text-wrap" style="min-width:180px;">{{ $tour->title }}</td>
+                    @php
+                        $isExpiredOrSoldOut = strtotime($tour->startDate) < strtotime(now()->format('Y-m-d')) || $tour->quantity <= 0;
+                    @endphp
+                    <tr @if($isExpiredOrSoldOut) style="opacity: 0.5;" @endif>
+                        <!-- <td class="ps-4 fw-bold text-muted">#{{ $tour->tourId }}</td> -->
+                        <td class="text-wrap" style="min-width:180px;">
+                            {{ $tour->title }}
+                            @if($isExpiredOrSoldOut)
+                                <span class="badge bg-secondary ms-1">Đã hết hạn/Hết chỗ</span>
+                            @endif
+                        </td>
                         <td class="fw-bold text-success">{{ format_currency($tour->priceAdult) }}</td>
                         <td class="d-none d-lg-table-cell text-muted small">{{ $tour->startDate }}</td>
                         <td class="d-none d-lg-table-cell text-muted small">{{ $tour->endDate }}</td>

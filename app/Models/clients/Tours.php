@@ -18,7 +18,9 @@ class Tours extends Model
      */
     public function getAllTours($filters = [])
     {
-        $query = DB::table($this->table);
+        $query = DB::table($this->table)
+            ->where('startDate', '>=', now()->format('Y-m-d'))
+            ->where('quantity', '>', 0);
         
         // Lọc theo domain (Trong nước, Ngoài nước)
         if (!empty($filters['domain'])) {

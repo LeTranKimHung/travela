@@ -8,6 +8,32 @@
     <a href="{{ route('admin.bookings.export') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i> Xuất Excel</a>
 </div>
 
+<!-- Form lọc -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form action="{{ route('admin.bookings.index') }}" method="GET" class="row g-3">
+            <div class="col-md-5">
+                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm theo tên khách, tên tour, ID..." value="{{ request('search') }}">
+            </div>
+            <div class="col-md-3">
+                <select name="status" class="form-select">
+                    <option value="">Tất cả trạng thái (trừ Đã hủy)</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Chờ duyệt</option>
+                    <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Đã xác nhận</option>
+                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Hoàn thành</option>
+                    <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Đã hủy</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search me-1"></i> Tìm kiếm</button>
+            </div>
+            <div class="col-md-2">
+                <a href="{{ route('admin.bookings.index') }}" class="btn btn-secondary w-100"><i class="fas fa-undo me-1"></i> Đặt lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="card">
     <div class="card-body p-0">
         <div class="table-responsive">

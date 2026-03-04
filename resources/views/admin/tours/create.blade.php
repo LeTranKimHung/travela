@@ -77,10 +77,10 @@
                         <div class="timeline-item border p-3 mb-3 rounded" style="background:#f8fafc;">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <strong class="text-primary">Lịch trình</strong>
-                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('.timeline-item').remove()"><i class="fas fa-trash"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeTimeline(this)"><i class="fas fa-trash"></i></button>
                             </div>
                             <input type="text" name="timeline_title[]" class="form-control mb-2" placeholder="Tiêu đề (VD: Ngày 1: TP.HCM - Đà Lạt)">
-                            <textarea name="timeline_desc[]" class="form-control" rows="3" placeholder="Chi tiết các hoạt động..."></textarea>
+                            <textarea name="timeline_desc[]" class="form-control timeline-editor" rows="3" placeholder="Chi tiết các hoạt động..."></textarea>
                         </div>
                     </div>
                 </div>
@@ -105,6 +105,8 @@
 @section('scripts')
 <script>
     let editor, policyEditor;
+    let timelineEditors = [];
+
     ClassicEditor.create(document.querySelector('#descriptionEditor'), {
         toolbar: ['heading','|','bold','italic','|','bulletedList','numberedList','|','blockQuote','link','insertTable','|','undo','redo'],
         placeholder: 'Nhập mô tả chi tiết về tour...'
@@ -119,10 +121,29 @@
         policyEditor = newEditor;
     }).catch(err => console.error(err));
 
+    function initTimelineEditors() {
+        document.querySelectorAll('.timeline-editor').forEach(el => {
+            if (!el.dataset.initialized) {
+                ClassicEditor.create(el, {
+                    toolbar: ['heading','|','bold','italic','|','bulletedList','numberedList','|','blockQuote','link','insertTable','|','undo','redo'],
+                }).then(newEditor => {
+                    timelineEditors.push({ element: el, editor: newEditor });
+                    el.dataset.initialized = 'true';
+                }).catch(err => console.error(err));
+            }
+        });
+    }
+
+    initTimelineEditors();
+
     // Đảm bảo dữ liệu được cập nhật từ CKEditor vào textarea trước khi submit
     document.querySelector('form').addEventListener('submit', function(e) {
         if (editor) document.querySelector('#descriptionEditor').value = editor.getData();
         if (policyEditor) document.querySelector('#policyEditor').value = policyEditor.getData();
+        
+        timelineEditors.forEach(item => {
+            item.element.value = item.editor.getData();
+        });
     });
 
     function addTimeline() {
@@ -130,13 +151,23 @@
             <div class="timeline-item border p-3 mb-3 rounded" style="background:#f8fafc;">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <strong class="text-primary">Lịch trình mới</strong>
-                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('.timeline-item').remove()"><i class="fas fa-trash"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeTimeline(this)"><i class="fas fa-trash"></i></button>
                 </div>
                 <input type="text" name="timeline_title[]" class="form-control mb-2" placeholder="Tiêu đề (VD: Ngày 2: Tham quan thung lũng tình yêu)">
-                <textarea name="timeline_desc[]" class="form-control" rows="3" placeholder="Chi tiết các hoạt động..."></textarea>
+                <textarea name="timeline_desc[]" class="form-control timeline-editor" rows="3" placeholder="Chi tiết các hoạt động..."></textarea>
             </div>
         `;
         document.getElementById('timelineContainer').insertAdjacentHTML('beforeend', html);
+        initTimelineEditors();
+    }
+
+    function removeTimeline(btn) {
+        const item = btn.closest('.timeline-item');
+        const textarea = item.querySelector('.timeline-editor');
+        if (textarea) {
+            timelineEditors = timelineEditors.filter(t => t.element !== textarea);
+        }
+        item.remove();
     }
 
     document.getElementById('imageInput').addEventListener('change', function(event) {
