@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PostAdminController;
 use App\Http\Controllers\Admin\GalleryAdminController;
 use App\Http\Controllers\Admin\ReviewAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\Admin\BannerAdminController;
 
 
 
@@ -172,4 +173,12 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::get('/coupons/edit/{id}', [App\Http\Controllers\Admin\CouponAdminController::class, 'edit'])->name('admin.coupons.edit');
     Route::post('/coupons/update/{id}', [App\Http\Controllers\Admin\CouponAdminController::class, 'update'])->name('admin.coupons.update');
     Route::post('/coupons/destroy/{id}', [App\Http\Controllers\Admin\CouponAdminController::class, 'destroy'])->name('admin.coupons.destroy');
+
+    // Quản lý Banner
+    Route::get('/banners', [BannerAdminController::class, 'index'])->name('admin.banners.index');
+    Route::get('/banners/create', [BannerAdminController::class, 'create'])->name('admin.banners.create');
+    Route::post('/banners/store', [BannerAdminController::class, 'store'])->name('admin.banners.store');
+    Route::get('/banners/edit/{id}', [BannerAdminController::class, 'edit'])->name('admin.banners.edit');
+    Route::put('/banners/update/{id}', [BannerAdminController::class, 'update'])->name('admin.banners.update');
+    Route::delete('/banners/destroy/{id}', [BannerAdminController::class, 'destroy'])->name('admin.banners.destroy');
 });

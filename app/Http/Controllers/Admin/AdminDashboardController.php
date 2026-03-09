@@ -16,10 +16,10 @@ class AdminDashboardController extends Controller {
         // Lấy doanh thu theo tháng (Năm hiện tại)
         $currentYear = date('Y');
         $monthlyRevenue = DB::table('tbl_booking')
-            ->select(DB::raw('sum(totalPrice) as total'), DB::raw('MONTH(created_at) as month'))
+            ->select(DB::raw('sum(totalPrice) as total'), DB::raw('MONTH(bookingDate) as month'))
             ->where('bookingStatus', 'confirmed')
-            ->whereYear('created_at', $currentYear)
-            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->whereYear('bookingDate', $currentYear)
+            ->groupBy(DB::raw('MONTH(bookingDate)'))
             ->get();
             
         $revenueMonths = [];

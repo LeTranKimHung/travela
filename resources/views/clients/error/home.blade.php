@@ -184,9 +184,43 @@
             <h5 class="section-title px-3">Packages</h5>
             <h1 class="mb-0">Awesome Packages</h1>
         </div>
+        
+        <!-- Packages Filter Tabs -->
+        <style>
+            #packages-filter .nav-item a {
+                transition: all 0.3s ease;
+            }
+            #packages-filter .nav-item a.active {
+                background-color: var(--bs-primary) !important;
+            }
+            #packages-filter .nav-item a.active span {
+                color: #fff !important;
+                font-weight: 600;
+            }
+        </style>
+        <div class="tab-class text-center">
+            <ul class="nav nav-pills d-inline-flex justify-content-center mb-5" id="packages-filter">
+                <li class="nav-item">
+                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" href="javascript:void(0);">
+                        <span class="text-dark" style="width: 150px;">Tất cả</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" href="javascript:void(0);">
+                        <span class="text-dark" style="width: 150px;">Trong nước</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" href="javascript:void(0);">
+                        <span class="text-dark" style="width: 150px;">Ngoài nước</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
         <div class="owl-carousel packages-carousel">
             @foreach ($tours as $tour)
-                <div class="packages-item card shadow border-0 mb-4">
+                <div class="packages-item card shadow border-0 mb-4" data-category="all">
                     <div class="packages-img position-relative">
                         <img src="{{ isset($tour->images[0]) ? asset('clients/img/galery-tour/' . $tour->images[0]) : asset('clients/img/packages-1.jpg') }}"
                             class="img-fluid w-100 rounded-top" alt="Image">
@@ -200,8 +234,10 @@
                             <i class="fa fa-calendar-alt me-2"></i>{{ $tour->time }}
                             <i class="fa fa-user ms-3 me-2"></i>{{ $tour->quantity }} Người
                         </p>
-                        {{-- <p class="card-text">{{ $tour->destination }}</p> --}}
-                        <div class="d-flex justify-content-between align-items-center">
+                        <p class="card-text text-muted mb-2 small" data-destination="{{ $tour->destination }}">
+                             <i class="fa fa-map-marker-alt me-2"></i>{{ $tour->destination }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
                             <span class="fw-bold text-success">{{ format_currency($tour->priceAdult) }}/người</span>
                             <a href="{{route ('tour-detail', ['id' => $tour->tourId])}}" class="btn btn-outline-primary btn-sm rounded-pill">Book now</a>
                         </div>
@@ -215,6 +251,79 @@
     </div>
 </div>
 <!-- Packages End -->
+@php
+    function isDomesticTour($destination) {
+        $vietnamCities = [
+            'Hồ Chí Minh', 'Hà Nội', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'An Giang', 'Bà Rịa - Vũng Tàu',
+            'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương',
+            'Bình Phước', 'Bình Thuận', 'Cà Mau', 'Cao Bằng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên',
+            'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Tĩnh', 'Hải Dương', 'Hậu Giang',
+            'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn',
+            'Lào Cai', 'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Quảng Bình',
+            'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng', 'Sơn La', 'Tây Ninh',
+            'Thái Bình', 'Thái Nguyên', 'Thanh Hóa', 'Thừa Thiên Huế', 'Tiền Giang', 'Trà Vinh', 'Tuyên Quang',
+            'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái', 'Phú Quốc', 'Sapa', 'Đà Lạt', 'Nha Trang', 'Hạ Long', "TP.HCM"
+        ];
+        
+        foreach ($vietnamCities as $city) {
+            if (stripos($destination, $city) !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
+@endphp
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterLinks = document.querySelectorAll('#packages-filter a');
+        const owlPackages = $('.packages-carousel');
+        
+        // Save original items
+        let originalItems = [];
+        $('.packages-carousel .packages-item').each(function() {
+            let itemHtml = $(this).parent().html();
+            let dest = $(this).find('[data-destination]').data('destination') || '';
+            let isDomestic = false;
+            
+            // Check logic identical to PHP logic via script
+            const vnCities = ['Hồ Chí Minh', 'Hà Nội', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'An Giang', 'Bà Rịa - Vũng Tàu', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận', 'Cà Mau', 'Cao Bằng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Tĩnh', 'Hải Dương', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai', 'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa', 'Thừa Thiên Huế', 'Tiền Giang', 'Trà Vinh', 'Tuyên Quang', 'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái', 'Phú Quốc', 'Sapa', 'Đà Lạt', 'Nha Trang', 'Hạ Long', 'TP.HCM'];
+            
+            vnCities.forEach(city => {
+                if(dest.toLowerCase().includes(city.toLowerCase())) isDomestic = true;
+            });
+            
+            originalItems.push({
+                html: itemHtml,
+                type: isDomestic ? 'domestic' : 'international'
+            });
+        });
+
+        filterLinks.forEach((link, idx) => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                filterLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                let filterType = 'all';
+                if(idx === 1) filterType = 'domestic';
+                else if(idx === 2) filterType = 'international';
+                
+                // Clear carousel
+                let itemsCount = owlPackages.find('.owl-item').length;
+                for(let i=0; i<itemsCount; i++) owlPackages.trigger('remove.owl.carousel', [0]);
+                
+                // Add items based on filter
+                originalItems.forEach(item => {
+                    if(filterType === 'all' || item.type === filterType) {
+                        owlPackages.trigger('add.owl.carousel', [item.html]);
+                    }
+                });
+                
+                owlPackages.trigger('refresh.owl.carousel');
+            });
+        });
+    });
+</script>
 
 <!-- Gallery Start -->
 <div class="container-fluid gallery py-5 my-5">

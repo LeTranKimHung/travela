@@ -24,7 +24,8 @@ class HomeController extends Controller
        $posts = DB::table('tbl_posts')->orderBy('created_at', 'desc')->limit(3)->get();
        $galleries = DB::table('tbl_galleries')->orderBy('created_at', 'desc')->limit(12)->get();
        $reviews = DB::table('tbl_reviews')->where('status', 1)->orderBy('created_at', 'desc')->get();
-       return view('clients.error.home', compact('title', 'tours', 'posts', 'galleries', 'reviews'));
+       $banners = DB::table('tbl_banners')->where('status', 1)->orderBy('bannerId', 'desc')->get();
+       return view('clients.error.home', compact('title', 'tours', 'posts', 'galleries', 'reviews', 'banners'));
     }
 
     

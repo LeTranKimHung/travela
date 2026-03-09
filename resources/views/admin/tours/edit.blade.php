@@ -55,8 +55,8 @@
                         $isTrongNuoc = in_array($tour->domain, ['b', 't', 'n', 'trong_nuoc']);
                     @endphp
                     <select name="domain" id="domainSelect" class="form-select" required>
-                        <option value="trong_nuoc" {{ $isTrongNuoc ? 'selected' : '' }}>Trong nước</option>
-                        <option value="ngoai_nuoc" {{ !$isTrongNuoc ? 'selected' : '' }}>Ngoài nước</option>
+                        <option value="t" {{ $isTrongNuoc ? 'selected' : '' }}>Trong nước</option>
+                        <option value="n" {{ !$isTrongNuoc ? 'selected' : '' }}>Ngoài nước</option>
                     </select>
                 </div>
                 <div class="col-md-12">
@@ -220,7 +220,7 @@
 
     function updateDestinations() {
         const domain = domainSelect.value;
-        const options = domain === 'trong_nuoc' ? vnProvinces : intlCountries;
+        const options = domain === 't' ? vnProvinces : intlCountries;
         
         destinationSelect.innerHTML = '';
         let hasMatchedSelected = false;

@@ -52,8 +52,8 @@
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Khu vực</label>
                     <select name="domain" id="domainSelect" class="form-select" required>
-                        <option value="trong_nuoc">Trong nước</option>
-                        <option value="ngoai_nuoc">Ngoài nước</option>
+                        <option value="t">Trong nước</option>
+                        <option value="n">Ngoài nước</option>
                     </select>
                 </div>
                 <div class="col-md-12">
@@ -200,7 +200,7 @@
 
     function updateDestinations() {
         const domain = domainSelect.value;
-        const options = domain === 'trong_nuoc' ? vnProvinces : intlCountries;
+        const options = domain === 't' ? vnProvinces : intlCountries;
         
         destinationSelect.innerHTML = '';
         options.forEach(dest => {
